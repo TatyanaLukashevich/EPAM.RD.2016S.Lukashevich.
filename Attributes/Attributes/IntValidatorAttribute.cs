@@ -6,8 +6,8 @@ namespace Attributes
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public class IntValidatorAttribute : Attribute
     {
-        private int min;
-        private int max;
+        private readonly int min;
+        private readonly int max;
 
         public IntValidatorAttribute(int min, int max)
         {

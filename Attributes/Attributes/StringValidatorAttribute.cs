@@ -6,12 +6,11 @@ namespace Attributes
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public class StringValidatorAttribute : Attribute
     {
-        private int length;
+        private readonly int length;
         public StringValidatorAttribute(int leng)
         {
             length = leng;
         }
 
-//рефлексия
     }
 }

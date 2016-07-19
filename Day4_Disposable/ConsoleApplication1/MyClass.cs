@@ -34,24 +34,27 @@ namespace ConsoleApplication1
         protected virtual void Dispose(bool disposing)
         {
             // TODO: Add your implementations here.
-            if (!_disposed)
+            if (_disposed)
             {
-                if (disposing)
-                {
-                    if (_resource != null && !_resource.IsInvalid)
-                        _resource.Dispose();
-                }
-                // Free your own state (unmanaged objects).
-                // Set large fields to null.
-                _buffer = IntPtr.Zero;
-                _disposed = true;
+                return;
             }
+            
+            if (disposing)
+            {
+                _resource?.Dispose();
+                Helper.DeallocateBuffer(_buffer);
+            }
+            _disposed = true;
+
         }
 
         public void DoSomething()
         {
             // NOTE: Manupulation with _buffer and _resource in this line.
-
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
         }
     }
 }
