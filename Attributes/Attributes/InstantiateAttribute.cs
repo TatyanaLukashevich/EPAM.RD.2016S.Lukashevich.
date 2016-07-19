@@ -20,16 +20,6 @@ namespace Attributes
 
         public InstantiateUserAttribute(string name, string lastName)
         {
-            Type userclass = typeof(User);
-            MatchParameterWithPropertyAttribute[] matchParameter =
-                (MatchParameterWithPropertyAttribute[])Attribute.GetCustomAttributes(userclass.GetConstructors()[0], typeof(MatchParameterWithPropertyAttribute));
-
-            var proper = userclass.GetProperty(matchParameter[0].Property);
-            DefaultValueAttribute[] propertyAttributes =
-                (DefaultValueAttribute[])Attribute.GetCustomAttributes(proper, typeof(DefaultValueAttribute));
-
-            
-            Id = (int)propertyAttributes[0].Value;
             Name = name;
             LastName = lastName;
         }
