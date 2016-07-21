@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Xml.Serialization;
 
 namespace UserStorage
@@ -27,6 +28,12 @@ namespace UserStorage
         public UserRepository()
         {
             Initialize(new GeneratorId(), MasterService.GetInstance);
+            //MasterService.GetInstance.MasterDomain = AppDomain.CreateDomain("MasterDomain");
+        }
+
+        public UserRepository(IService service)
+        {
+            Initialize(new GeneratorId(), service);
         }
         #endregion
 
@@ -143,6 +150,14 @@ namespace UserStorage
             DataSwitch = new BooleanSwitch("Data", "DataAccess module");
             Logger.Info("UserRepository initialized");
         }
+
+        //private void Initialize()
+        //{
+        //    var domain = AppDomain.CreateDomain("domain");
+        //    IService service = (IService)domain.CreateInstanceAndUnwrap(Assembly.GetExecutingAssembly().FullName, typeof(IService).FullName);
+        //    service.RegisterRepository();
+
+        //}
 
         private void GenerateId(User user)
         {

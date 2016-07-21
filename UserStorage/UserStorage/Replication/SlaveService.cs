@@ -14,10 +14,12 @@ namespace UserStorage
     public class SlaveService : IService
     {
         #region Private Fields
+        public AppDomain SlaveDomain { get; private set; }
         private static int Counter { get; set; }
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        #endregion
         private List<User> Users = new List<User>();
+        #endregion
+
         public bool HasRepository { get; private set; }
         public SlaveService()
         {
@@ -73,14 +75,5 @@ namespace UserStorage
             Debug.WriteLine("Delete method notification");
         }
 
-        //public void AddMethodRespond()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void DeleteMethodRespond()
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

@@ -13,6 +13,7 @@ namespace UserStorage
     public class MasterService :IService
     {
         #region Fields
+        public AppDomain MasterDomain { get; private set; }
         private static MasterService _instance;
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private List<User> users = new List<User>();
@@ -25,7 +26,9 @@ namespace UserStorage
         #endregion
        
         #region Constructors
-        private MasterService() { }
+        private MasterService()
+        {  
+        }
         #endregion
 
         public bool HasRepository { get; private set; }

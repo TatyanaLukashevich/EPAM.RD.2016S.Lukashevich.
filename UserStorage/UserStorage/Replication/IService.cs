@@ -4,7 +4,6 @@ using UserStorage;
 
 namespace UserStorage
 {
-    // IStrategy
    public interface IService 
     {
         bool HasRepository { get; }
