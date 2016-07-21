@@ -10,7 +10,7 @@ namespace UserStorage
     {
         int Add(User user);
         void Delete(User user);
-        List<User> FindByTag(Func<string, List<User>> methodTag, string tag);
+        List<User> FindByTag(Func<string, List<User>> methodTag, string tag); //to do return massiv
         void WriteToXML();
         void ReadFromXML();
     }
