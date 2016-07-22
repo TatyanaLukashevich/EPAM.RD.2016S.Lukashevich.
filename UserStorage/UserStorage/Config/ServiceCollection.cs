@@ -2,7 +2,7 @@
 
 namespace UserStorage.Config
 {
-   public class ServiceCollection :ConfigurationElementCollection
+    public class ServiceCollection : ConfigurationElementCollection
     {
         protected override ConfigurationElement CreateNewElement()
         {

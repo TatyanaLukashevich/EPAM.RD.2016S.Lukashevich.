@@ -151,14 +151,6 @@ namespace UserStorage
             Logger.Info("UserRepository initialized");
         }
 
-        //private void Initialize()
-        //{
-        //    var domain = AppDomain.CreateDomain("domain");
-        //    IService service = (IService)domain.CreateInstanceAndUnwrap(Assembly.GetExecutingAssembly().FullName, typeof(IService).FullName);
-        //    service.RegisterRepository();
-
-        //}
-
         private void GenerateId(User user)
         {
             GeneratorId generator = new GeneratorId();
