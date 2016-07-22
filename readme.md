@@ -1,6 +1,6 @@
 - Create a user storage system that allows to store users entities.
 - A user is an entity with first/last name, date of birth, personal id (like in passport), gender (enum), an array of visa records (struct { country, start, end }). Add functionality to compare users, and get a hashcode of the entity.
-- There should be several ways to store users (for ex. In DB), but we need only one implementation – in memory. But there should be a possibility to add an another implementation.
+- There should be several ways to store users (for ex. In DB), but we need only one implementation â€“ in memory. But there should be a possibility to add an another implementation.
 - Methods for storage:
 	o Add a new user: Add(User user) -> returns User ID
 	o Search for an user: SearchForUser(ISearchCriteria criteria) -> returns User IDs. At least 3 criteria.
@@ -34,11 +34,12 @@
 	o It's possible to start slaves first, and then start master to avoid conflicts when master is running and there are no slaves.
 	o Store all configuration informations about hosts/ports in custom section in App.config.
 - Protect your user services from concurrent calls.
-	o For master – calling Add/Delete, Add/Search, Delete/Search simultaneously.
-	o For slaves – calling Search and updating an user repository simultaneously.
+	o For master â€“ calling Add/Delete, Add/Search, Delete/Search simultaneously.
+	o For slaves â€“ calling Search and updating an user repository simultaneously.
 	o Check how your code works by making calls to master service in several threads.
 - Make your application run in several threads, one thread per user service. For example:
 	o T1 is making calls to master service: Add, Delete, Search in cycle with Sleep().
 	o T2 is making calls to slave #1: Search in cycle with Sleep().
 	o T3 is making calls to slave #2: Search in cycle with Sleep().
 	o Changes (Add/Delete) on master node should lead to changes in Search output on slaves.
+- Make custom serialization 
