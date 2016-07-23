@@ -1,4 +1,5 @@
 ﻿using NLog;
+using Replication;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -6,7 +7,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Xml.Serialization;
+using UserStorage.AppDomainConfig;
 
 namespace UserStorage
 {
@@ -19,7 +22,7 @@ namespace UserStorage
 
         #region Autoproperties
         public List<User> UserCollection { get; set; }
-        public IService Service { get; private set; }
+        public MasterService Service { get; private set; }
         public GeneratorId Generator { get; set; }
         public static BooleanSwitch DataSwitch { get; private set; }
         #endregion
@@ -28,13 +31,9 @@ namespace UserStorage
         public UserRepository()
         {
             Initialize(new GeneratorId(), MasterService.GetInstance);
-            //MasterService.GetInstance.MasterDomain = AppDomain.CreateDomain("MasterDomain");
+            DomainLoader.CreateDomain();
         }
 
-        public UserRepository(IService service)
-        {
-            Initialize(new GeneratorId(), service);
-        }
         #endregion
 
         #region Public methods
@@ -42,6 +41,7 @@ namespace UserStorage
         {
             Logger.Trace("UserRepository.Add called");
             Service.Add(user);
+           
             if (!this.ValidateUser(user))
             {
                 throw new ArgumentException("user is too young");
@@ -72,15 +72,22 @@ namespace UserStorage
             }
         }
 
-        public List<User> FindByTag(Func<string, List<User>> methodTag, string tag)
+        public List<int> FindByTag(Func<string, List<User>> methodTag, string tag)
         {
             var required = UserCollection.FindAll(user => methodTag(tag).Contains(user));
+            var requiredId = new List<int>();
             if (required.Count == 0)
             {
                 throw new InvalidOperationException("user is not found");
             }
             else
-                return required;
+            {
+                foreach (var item in required)
+                {
+                    requiredId.Add(item.ID);
+                }
+            }
+                return requiredId;
         }
 
         public void WriteToXML()
@@ -138,14 +145,14 @@ namespace UserStorage
         #endregion
 
         #region Private Methods
-        private void Initialize(GeneratorId generator, IService service)
+        private void Initialize(GeneratorId generator, MasterService service)
         {
             Generator = generator;
             Service = service;
-            if (Service.HasRepository)
-                throw new ArgumentException("It's impossible to register more than one repository to the role");
+            //if (Service.HasRepository)
+            //    throw new ArgumentException("It's impossible to register more than one repository to the role");
             Service.RegisterRepository();
-
+            Service.RegisterSlave();
             UserCollection = new List<User>();
             DataSwitch = new BooleanSwitch("Data", "DataAccess module");
             Logger.Info("UserRepository initialized");

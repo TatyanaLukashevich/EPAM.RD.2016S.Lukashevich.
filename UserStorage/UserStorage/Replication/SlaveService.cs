@@ -3,28 +3,23 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UserStorage;
 using UserStorage.Config;
 
-namespace UserStorage
+namespace Replication
 {
     public class SlaveService : IService
     {
         #region Private Fields
         public AppDomain SlaveDomain { get; private set; }
-        private static int Counter { get; set; }
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private List<User> Users = new List<User>();
-        public bool HasRepository { get; private set; }
+        public List<User> Users = new List<User>();
         #endregion
 
         #region Constructors
-        public SlaveService()
+        internal SlaveService()
         {
-            CheckAmountOfSlaves();
+            //RegisterRepository();
             MasterService.GetInstance.AddMethod += HandleAddEvent;
             MasterService.GetInstance.DeleteMethod += HandleDeleteEvent;
         }
@@ -50,7 +45,6 @@ namespace UserStorage
         public void RegisterRepository()
         {
             Logger.Info("Slave Repository have been registered");
-            HasRepository = true;
         }
 
         public void HandleAddEvent(object sender, EventArgs args)
@@ -67,24 +61,24 @@ namespace UserStorage
         #endregion
 
         #region Private methods
-        private void CheckAmountOfSlaves()
-        {
-            ReplicationSection section = (ReplicationSection)ConfigurationManager.GetSection("ReplicationSection");
-            int value = 0;
-            for (int i = 0; i < section.ServicesItems.Count; i++)
-            {
-                if (section.ServicesItems[i].ServiceType.Contains("Slave"))
-                    value++;
-            }
+        //private void CheckAmountOfSlaves()
+        //{
+        //    ReplicationSection section = (ReplicationSection)ConfigurationManager.GetSection("ReplicationSection");
+        //    int value = 0;
+        //    for (int i = 0; i < section.ServicesItems.Count; i++)
+        //    {
+        //        if (section.ServicesItems[i].ServiceType.Contains("Slave"))
+        //            value++;
+        //    }
 
-            if (Counter >= value)
-            {
-                Logger.Error("There is no way to create more than {0} instances of Slave class", value);
-                throw new ArgumentException("There is no way to create more than {0} instances of Slave class",
-                    value.ToString());
-            }
-            Counter++;
-        }
+        //    if (Counter >= value)
+        //    {
+        //        Logger.Error("There is no way to create more than {0} instances of Slave class", value);
+        //        throw new ArgumentException("There is no way to create more than {0} instances of Slave class",
+        //            value.ToString());
+        //    }
+        //    Counter++;
+        //}
         #endregion
     }
 }

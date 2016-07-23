@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UserStorage;
 using System.Collections.Generic;
 using UserStorage.Entities;
+using Replication;
 
 namespace UserStorageTest
 {
@@ -67,7 +68,7 @@ namespace UserStorageTest
             repo.Add(user);
             repo.Add(user2);
             var required = repo.FindByTag(repo.FindByLastname, "Yorke");
-            Assert.AreEqual(required[0], user2);
+            Assert.AreEqual(required[0], user2.ID);
         }
 
         [TestMethod]

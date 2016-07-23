@@ -21,8 +21,6 @@ namespace UserStorageConsole
             repo.Add(user2);
             repo.Add(user3);
             repo.WriteToXML();
-            UserRepository repo1 = new UserRepository(new SlaveService());
-            UserRepository repo2 = new UserRepository(new SlaveService());
         }
     }
 }

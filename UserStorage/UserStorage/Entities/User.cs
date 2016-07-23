@@ -58,26 +58,23 @@ namespace UserStorage
 
         public override int GetHashCode()
         {
-            unchecked
+            if(LastName!=null && DateOfBirth!=null)
             {
-                if (Name != null && LastName != null && DateOfBirth != null)
-                {
-                    var hashCode = (Name.Length ^ 15) + (LastName.Length * 111) + DateOfBirth.GetHashCode();
-                    return hashCode;
-                }
+                var hashCode = ID.GetHashCode() + LastName.GetHashCode() + DateOfBirth.GetHashCode();
+                return hashCode;
             }
             return base.GetHashCode();
         }
 
-        public bool Equals(User obj)
+        public bool Equals(User user)
         {
-            if (ReferenceEquals(obj, null)) return false;
+            if (ReferenceEquals(user, null)) return false;
 
-            return ((ID==obj.ID) &&
-                   (string.CompareOrdinal(Name, obj.Name) == 0) &&
-                   (string.CompareOrdinal(LastName, obj.LastName) == 0) &&
-                   (DateOfBirth == obj.DateOfBirth) &&
-                   VisaRecords.SequenceEqual(obj.VisaRecords));
+            return ((ID==user.ID) &&
+                   (string.CompareOrdinal(Name, user.Name) == 0) &&
+                   (string.CompareOrdinal(LastName, user.LastName) == 0) &&
+                   (DateOfBirth == user.DateOfBirth) &&
+                   VisaRecords.SequenceEqual(user.VisaRecords));
         }
 
         public override string ToString()

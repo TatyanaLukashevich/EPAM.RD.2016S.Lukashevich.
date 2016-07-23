@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UserStorage;
 using System.Collections.Generic;
+using Replication;
 
 namespace UserStorageTest
 {
