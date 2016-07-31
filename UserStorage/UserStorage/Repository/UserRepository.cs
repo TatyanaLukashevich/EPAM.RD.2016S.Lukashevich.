@@ -1,51 +1,49 @@
-﻿using NLog;
-using Replication;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.Serialization;
 using System.Xml.Serialization;
-using UserStorage.AppDomainConfig;
+using NLog;
+using Replication;
 
 namespace UserStorage
 {
     [Serializable]
-    public class UserRepository : IUserRepository
+    public class UserRepository : MarshalByRefObject, IUserRepository
     {
         #region Private Fields
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         #endregion
 
         #region Autoproperties
-        public List<User> UserCollection { get; set; }
-        public MasterService Service { get; private set; }
-        public GeneratorId Generator { get; set; }
         public static BooleanSwitch DataSwitch { get; private set; }
+
+        public List<User> UserCollection { get; set; }
+
+        public MasterService Service { get; private set; }
+
+        public GeneratorId Generator { get; set; }
         #endregion
 
         #region Constructors
         public UserRepository()
         {
-            Initialize(new GeneratorId(), MasterService.GetInstance);
-            DomainLoader.CreateDomain();
+            Initialize(new GeneratorId());
         }
-
         #endregion
 
         #region Public methods
         public int Add(User user)
         {
             Logger.Trace("UserRepository.Add called");
-            Service.Add(user);
            
             if (!this.ValidateUser(user))
             {
                 throw new ArgumentException("user is too young");
             }
+
             if (UserCollection.Contains(user))
             {
                 throw new InvalidOperationException("user already exist");
@@ -55,13 +53,14 @@ namespace UserStorage
                 this.GenerateId(user);
                 UserCollection.Add(user);
             }
+
             return user.ID;
         }
 
         public void Delete(User user)
         {
             Logger.Trace("UserRepository.Delete called");
-            Service.Delete(user);
+
             if (!UserCollection.Contains(user))
             {
                 throw new InvalidOperationException("there is no such a user");
@@ -87,6 +86,7 @@ namespace UserStorage
                     requiredId.Add(item.ID);
                 }
             }
+
                 return requiredId;
         }
 
@@ -99,6 +99,7 @@ namespace UserStorage
             {
                 formatter.Serialize(fs, UserCollection);
             }
+
             Logger.Info("Collection of users was sucessfully serialized into xml file");
         }
 
@@ -113,6 +114,7 @@ namespace UserStorage
                 List<User> newUsers = (List<User>)formatter.Deserialize(fs);
                 UserCollection = newUsers;
             }
+
             Logger.Info("Collection of users was sucessfully deserialized from xml file");
         }
 
@@ -145,14 +147,10 @@ namespace UserStorage
         #endregion
 
         #region Private Methods
-        private void Initialize(GeneratorId generator, MasterService service)
+
+        private void Initialize(GeneratorId generator)
         {
             Generator = generator;
-            Service = service;
-            //if (Service.HasRepository)
-            //    throw new ArgumentException("It's impossible to register more than one repository to the role");
-            Service.RegisterRepository();
-            Service.RegisterSlave();
             UserCollection = new List<User>();
             DataSwitch = new BooleanSwitch("Data", "DataAccess module");
             Logger.Info("UserRepository initialized");
@@ -170,6 +168,5 @@ namespace UserStorage
             return validator.GenerlValidator(validator.IsValidAge, user);
         }
         #endregion
-
     }
 }

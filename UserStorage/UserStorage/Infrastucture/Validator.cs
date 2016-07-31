@@ -14,15 +14,17 @@ namespace UserStorage
             {
                 return false;
             }
+
             return true;
         }
 
         public bool IsValidName(User user)
         {
-            if (user.Name.Length>=10 || user.Name.Length<2)
+            if (user.Name.Length >= 10 || user.Name.Length < 2)
             {
                 return false;
             }
+
             return true;
         }
 

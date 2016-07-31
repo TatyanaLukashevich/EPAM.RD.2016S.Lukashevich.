@@ -1,21 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UserStorage;
-using System.Collections.Generic;
 using UserStorage.Entities;
-using Replication;
 
 namespace UserStorageTest
 {
     [TestClass]
    public class UserRepositoryTest
     {
-        [TestInitialize]
-        public void Cleanup()
-        {
-            typeof(MasterService).GetProperty("HasRepository").SetValue(MasterService.GetInstance, false);
-        }
-
         [TestMethod]
         public void Add_newUser_Test()
         {
@@ -97,7 +90,5 @@ namespace UserStorageTest
             repo.ReadFromXML();
             Assert.AreEqual(2, repo.UserCollection.Count);
         }
-    }
-
-   
+    }  
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UserStorage;
-using System.Collections.Generic;
 
 namespace UserStorageTest
 {

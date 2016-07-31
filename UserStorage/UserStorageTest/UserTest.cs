@@ -1,20 +1,11 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UserStorage;
-using System.Collections.Generic;
-using Replication;
 
 namespace UserStorageTest
 {
     [TestClass]
     public class UserTest
-    {
-        [TestInitialize]
-        public void Cleanup()
-        {
-            typeof(MasterService).GetProperty("HasRepository").SetValue(MasterService.GetInstance, false);
-        }
-
+    { 
         [TestMethod]
         public void OperatorEquality_TwoUsers_ReturnTrue()
         {
@@ -43,7 +34,6 @@ namespace UserStorageTest
             var right = left;
             bool equal = left.Equals(right);
             Assert.IsTrue(equal);
-        }
-       
+        }      
     }
 }

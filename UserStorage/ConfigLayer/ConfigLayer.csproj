@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7F1E9001-96D0-43BB-9B75-53478E795E07}</ProjectGuid>
+    <ProjectGuid>{3E32B74C-10B4-4FCF-9B01-380D8EF6C87B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UserStorage</RootNamespace>
-    <AssemblyName>UserStorage</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>ConfigLayer</RootNamespace>
+    <AssemblyName>ConfigLayer</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -31,16 +31,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.4.0-betaV15\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.3.6\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,31 +45,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\Gender.cs" />
-    <Compile Include="Entities\VisaRecord.cs" />
-    <Compile Include="Infrastucture\GeneratorId.cs" />
-    <Compile Include="Interface\IUserRepository.cs" />
-    <Compile Include="Entities\User.cs" />
-    <Compile Include="NetworkCommunication\Communicator.cs" />
-    <Compile Include="NetworkCommunication\Message.cs" />
-    <Compile Include="NetworkCommunication\Receiver.cs" />
-    <Compile Include="NetworkCommunication\Sender.cs" />
+    <Compile Include="AppDomainConfig\DomainLoader.cs" />
+    <Compile Include="CustomSectionConfig\ReplicationSection.cs" />
+    <Compile Include="CustomSectionConfig\ServiceCollection.cs" />
+    <Compile Include="CustomSectionConfig\ServiceElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Replication\ChangedUserEventArgs.cs" />
-    <Compile Include="Replication\Service.cs" />
-    <Compile Include="Replication\MasterService.cs" />
-    <Compile Include="Replication\SlaveService.cs" />
-    <Compile Include="Repository\UserRepository.cs" />
-    <Compile Include="Infrastucture\Validator.cs" />
+    <Compile Include="AppDomainConfig\SystemCreater.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <Content Include="NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Include="NLog.xsd">
-      <SubType>Designer</SubType>
-    </None>
+    <ProjectReference Include="..\UserStorage\UserStorage.csproj">
+      <Project>{7f1e9001-96d0-43bb-9b75-53478e795e07}</Project>
+      <Name>UserStorage</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,45 +1,36 @@
-﻿using NLog;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using System;
 using System.Diagnostics;
+using NLog;
 using UserStorage;
-using UserStorage.Config;
+using UserStorage.Replication;
 
 namespace Replication
 {
-    public class SlaveService : IService
+    public class SlaveService : Service
     {
         #region Private Fields
-        public AppDomain SlaveDomain { get; private set; }
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        public List<User> Users = new List<User>();
+
+        public AppDomain SlaveDomain { get; private set; }
         #endregion
 
         #region Constructors
-        internal SlaveService()
+        public SlaveService(UserRepository repo) : base(repo)
         {
-            //RegisterRepository();
-            MasterService.GetInstance.AddMethod += HandleAddEvent;
-            MasterService.GetInstance.DeleteMethod += HandleDeleteEvent;
+            MasterService.GetInstance.AddMethod += OnAdded;
+            MasterService.GetInstance.DeleteMethod += OnDeleted;
         }
         #endregion
 
         #region Public metods
-        public void Add(User user)
+        public override void Add(User user)
         {
             throw new InvalidOperationException();
         }
 
-        public void Delete(User user)
+        public override void Delete(User user)
         {
             throw new InvalidOperationException();
-        }
-
-        public void FindByTag(Func<string, List<User>> methodTag, string tag)
-        {
-            Logger.Info("Search user by predicate");
-            var required = Users.FindAll(user => methodTag(tag).Contains(user));
         }
 
         public void RegisterRepository()
@@ -47,38 +38,32 @@ namespace Replication
             Logger.Info("Slave Repository have been registered");
         }
 
-        public void HandleAddEvent(object sender, EventArgs args)
+        private void OnAdded(object sender, ChangedUserEventArgs args)
         {
-            Logger.Info("HandleAddEvent called");
-            Debug.WriteLine("Add method notification");
+            locker.EnterWriteLock();
+            try
+            {
+                Debug.WriteLine("On Added! " + AppDomain.CurrentDomain.FriendlyName);
+                Repo.Add(args.ChangedUser);
+            }
+            finally
+            {
+                locker.ExitWriteLock();
+            }
         }
 
-        public void HandleDeleteEvent(object sender, EventArgs args)
+        private void OnDeleted(object sender, ChangedUserEventArgs args)
         {
-            Logger.Info("HandleDeleteEvent called");
-            Debug.WriteLine("Delete method notification");
+            locker.EnterWriteLock();
+            try
+            {
+                Repo.Delete(args.ChangedUser);
+            }
+            finally
+            {
+                locker.ExitWriteLock();
+            }
         }
-        #endregion
-
-        #region Private methods
-        //private void CheckAmountOfSlaves()
-        //{
-        //    ReplicationSection section = (ReplicationSection)ConfigurationManager.GetSection("ReplicationSection");
-        //    int value = 0;
-        //    for (int i = 0; i < section.ServicesItems.Count; i++)
-        //    {
-        //        if (section.ServicesItems[i].ServiceType.Contains("Slave"))
-        //            value++;
-        //    }
-
-        //    if (Counter >= value)
-        //    {
-        //        Logger.Error("There is no way to create more than {0} instances of Slave class", value);
-        //        throw new ArgumentException("There is no way to create more than {0} instances of Slave class",
-        //            value.ToString());
-        //    }
-        //    Counter++;
-        //}
         #endregion
     }
 }
