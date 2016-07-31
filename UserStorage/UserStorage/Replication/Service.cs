@@ -37,7 +37,6 @@ namespace Replication
                 }
                     
                 Repo.Add(user);
-                Task.Run(() =>HandleAddEvent(this, new ChangedUserEventArgs() { ChangedUser = user }));
             }
             finally
             {
@@ -54,8 +53,6 @@ namespace Replication
                 {
                     Logger.Info("Invoke delete event");
                 }
-
-                Task.Run(() => HandleDeleteEvent(this, new ChangedUserEventArgs() { ChangedUser = user }));
                 Repo.Delete(user);
             }
             finally
