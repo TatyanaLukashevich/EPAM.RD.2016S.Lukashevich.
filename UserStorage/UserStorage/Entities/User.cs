@@ -11,7 +11,7 @@ using UserStorage.Entities;
 namespace UserStorage
 {
     [Serializable]
-    public class User : IXmlSerializable
+    public class User /* : IXmlSerializable*/
     {
         #region constructors
         public User()
@@ -111,58 +111,58 @@ namespace UserStorage
             return null;
         }
 
-        public void WriteXml(XmlWriter writer)
-        {
-            writer.WriteStartElement(nameof(User));
-            writer.WriteStartElement("UserElement");
-            writer.WriteElementString(nameof(ID), ID.ToString());
-            writer.WriteElementString(nameof(Name), Name);
-            writer.WriteElementString(nameof(LastName), LastName);
-            writer.WriteElementString(nameof(Gender), ((int)UserGender).ToString());
-            writer.WriteElementString(nameof(DateOfBirth), DateOfBirth.ToString("yyyy-MM-dd"));
-            if (VisaRecords != null)
-            {
-                writer.WriteStartElement(nameof(VisaRecords));
-                writer.WriteAttributeString("count", VisaRecords.Count.ToString());
-                for (int i = 0; i < VisaRecords.Count; i++)
-                {
-                    VisaRecords[i].WriteXml(writer);
-                }
+        //public void WriteXml(XmlWriter writer)
+        //{
+        //    writer.WriteStartElement(nameof(User));
+        //    writer.WriteStartElement("UserElement");
+        //    writer.WriteElementString(nameof(ID), ID.ToString());
+        //    writer.WriteElementString(nameof(Name), Name);
+        //    writer.WriteElementString(nameof(LastName), LastName);
+        //    writer.WriteElementString(nameof(Gender), ((int)UserGender).ToString());
+        //    writer.WriteElementString(nameof(DateOfBirth), DateOfBirth.ToString("yyyy-MM-dd"));
+        //    if (VisaRecords != null)
+        //    {
+        //        writer.WriteStartElement(nameof(VisaRecords));
+        //        writer.WriteAttributeString("count", VisaRecords.Count.ToString());
+        //        for (int i = 0; i < VisaRecords.Count; i++)
+        //        {
+        //            VisaRecords[i].WriteXml(writer);
+        //        }
 
-                writer.WriteEndElement();
-            }
+        //        writer.WriteEndElement();
+        //    }
 
-            writer.WriteEndElement();
-        }
+        //    writer.WriteEndElement();
+        //}
 
-        public void ReadXml(XmlReader reader)
-        {
-            reader.MoveToContent();
-            reader.ReadStartElement(nameof(User));
-            ID = Convert.ToInt32(reader.ReadElementString("ID"));
-            Name = reader.ReadElementContentAsString();
-            LastName = reader.ReadElementContentAsString();
-            UserGender = (Gender)reader.ReadElementContentAsInt();
-            DateOfBirth = reader.ReadElementContentAsDateTime();
+        //public void ReadXml(XmlReader reader)
+        //{
+        //    reader.MoveToContent();
+        //    reader.ReadStartElement(nameof(User));
+        //    ID = Convert.ToInt32(reader.ReadElementString("ID"));
+        //    Name = reader.ReadElementContentAsString();
+        //    LastName = reader.ReadElementContentAsString();
+        //    UserGender = (Gender)reader.ReadElementContentAsInt();
+        //    DateOfBirth = reader.ReadElementContentAsDateTime();
 
-            reader.MoveToAttribute("count");
-            int count = int.Parse(reader.Value);
-            VisaRecords = new List<VisaRecord>();
-            if (VisaRecords != null)
-            {
-                reader.ReadStartElement(nameof(VisaRecords));
-                var visaSer = new XmlSerializer(typeof(VisaRecord));
-                for (int i = 0; i < count; i++)
-                {
-                    var visa = (VisaRecord)visaSer.Deserialize(reader);
-                    VisaRecords[i] = visa;
-                }
+        //    reader.MoveToAttribute("count");
+        //    int count = int.Parse(reader.Value);
+        //    VisaRecords = new List<VisaRecord>();
+        //    if (VisaRecords != null)
+        //    {
+        //        reader.ReadStartElement(nameof(VisaRecords));
+        //        var visaSer = new XmlSerializer(typeof(VisaRecord));
+        //        for (int i = 0; i < count; i++)
+        //        {
+        //            var visa = (VisaRecord)visaSer.Deserialize(reader);
+        //            VisaRecords[i] = visa;
+        //        }
 
-                reader.ReadEndElement();
-            }
+        //        reader.ReadEndElement();
+        //    }
 
-            reader.ReadEndElement();
-        }
+        //    reader.ReadEndElement();
+        //}
         #endregion
     }
 }

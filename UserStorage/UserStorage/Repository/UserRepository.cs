@@ -44,10 +44,10 @@ namespace UserStorage
                 throw new ArgumentException("user is too young");
             }
 
-            if (UserCollection.Contains(user))
-            {
-                throw new InvalidOperationException("user already exist");
-            }
+            //if (UserCollection.Contains(user))
+            //{
+            //    throw new InvalidOperationException("user already exist");
+            //}
             else
             {
                 this.GenerateId(user);
@@ -103,19 +103,20 @@ namespace UserStorage
             Logger.Info("Collection of users was sucessfully serialized into xml file");
         }
 
-        public void ReadFromXML()
+        public List<User> ReadFromXML()
         {
             Logger.Trace("UserRepository.Load called");
             XmlSerializer formatter = new XmlSerializer(typeof(List<User>));
             string path = ConfigurationManager.AppSettings["xmlPath"];
-
+            List<User> newUsers = new List<User>();
             using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
             {
-                List<User> newUsers = (List<User>)formatter.Deserialize(fs);
+               newUsers = (List<User>)formatter.Deserialize(fs);
                 UserCollection = newUsers;
             }
 
             Logger.Info("Collection of users was sucessfully deserialized from xml file");
+            return newUsers;
         }
 
         public int GetLastId()

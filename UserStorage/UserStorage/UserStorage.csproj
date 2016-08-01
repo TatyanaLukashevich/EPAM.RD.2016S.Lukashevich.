@@ -54,7 +54,7 @@
     <Compile Include="Infrastucture\GeneratorId.cs" />
     <Compile Include="Interface\IUserRepository.cs" />
     <Compile Include="Entities\User.cs" />
-    <Compile Include="NetworkCommunication\Communicator.cs" />
+    <Compile Include="Replication\Communicator.cs" />
     <Compile Include="NetworkCommunication\Message.cs" />
     <Compile Include="NetworkCommunication\Receiver.cs" />
     <Compile Include="NetworkCommunication\Sender.cs" />

@@ -10,6 +10,7 @@ using UserStorage.Replication;
 
 namespace UserStorage.NetworkCommunication
 {
+    [Serializable]
     public class Communicator : MarshalByRefObject
     {
         public event EventHandler<ChangedUserEventArgs> UserAdded;
@@ -22,7 +23,9 @@ namespace UserStorage.NetworkCommunication
 
         private Task recieverTask;
 
-        private CancellationTokenSource token;
+        private CancellationTokenSource tokenSource;
+
+        //public Service Service { get; set; }
 
         public Communicator(Sender sender, Receiver receiver)
         {
@@ -40,7 +43,6 @@ namespace UserStorage.NetworkCommunication
 
         }
 
-        public Service Service { get; set; }
 
         public void Connect(IEnumerable<IPEndPoint> endPoints)
         {
@@ -54,26 +56,23 @@ namespace UserStorage.NetworkCommunication
 
         public void RunReceiver()
         {
-            if (receiver == null)
-            {
-                return;
-            }
-
-            token = new CancellationTokenSource();
-            recieverTask = Task.Run((Action)Receive, token.Token);
+            if (receiver == null) return;
+            tokenSource = new CancellationTokenSource();
+            recieverTask = Task.Run((Action)Receive, tokenSource.Token);
         }
 
         public void StopReceiver()
         {
-            if (token.Token.CanBeCanceled)
+            if (tokenSource.Token.CanBeCanceled)
             {
-                token.Cancel();
+                tokenSource.Cancel();
             }
         }
 
         public void SendAdd(ChangedUserEventArgs args)
         {
-            if (sender == null) return;
+            if (sender == null)
+                return;
 
             Send(new Message
             {
@@ -83,7 +82,8 @@ namespace UserStorage.NetworkCommunication
         }
         public void SendDelete(ChangedUserEventArgs args)
         {
-            if (sender == null) return;
+            if (sender == null)
+                return;
 
             Send(new Message
             {
@@ -96,20 +96,20 @@ namespace UserStorage.NetworkCommunication
         {
             while (true)
             {
-                if (token.IsCancellationRequested) return;
+                if (tokenSource.IsCancellationRequested) return;
                 var message = receiver.Receive();
+                if(message==null)
+                {
+                    return;
+                }
                 var args = new ChangedUserEventArgs
                 {
                     ChangedUser = message.User
                 };
-
-                if (message.MethodType == 0)
+                switch (message.MethodType)
                 {
-                    OnUserAdded(this, args);
-                }
-                else
-                {
-                    OnUserDeleted(this, args);
+                    case MethodType.Add: OnUserAdded(this, args); break;
+                    case MethodType.Delete: OnUserDeleted(this, args); break;
                 }
             }
         }
@@ -121,13 +121,11 @@ namespace UserStorage.NetworkCommunication
 
         protected virtual void OnUserDeleted(object sender, ChangedUserEventArgs args)
         {
-            Service.Delete(args.ChangedUser);
             UserDeleted?.Invoke(sender, args);
         }
 
         protected virtual void OnUserAdded(object sender, ChangedUserEventArgs args)
         {
-            Service.Add(args.ChangedUser);
             UserAdded?.Invoke(sender, args);
         }
 

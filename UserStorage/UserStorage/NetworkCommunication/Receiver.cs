@@ -40,7 +40,10 @@ namespace UserStorage.NetworkCommunication
         {
             BinaryFormatter formatter = new BinaryFormatter();
             Message message;
-
+            if (handler==null)
+            {
+                return null;
+            }
             using (var networkStream = new NetworkStream(handler, false))
             {
                 message = (Message)formatter.Deserialize(networkStream);

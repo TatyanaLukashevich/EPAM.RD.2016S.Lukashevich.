@@ -16,12 +16,6 @@ namespace Replication
 
         #endregion
 
-        #region events
-        public event EventHandler<ChangedUserEventArgs> AddMethod;
-
-        public event EventHandler<ChangedUserEventArgs> DeleteMethod;
-        #endregion
-
         #region Constructors
         public MasterService(UserRepository repo) : base(repo)
         {
@@ -37,16 +31,26 @@ namespace Replication
         public override void Add(User user)
         {
             base.Add(user);
-            ////Communicator?.SendAdd(args);
-            AddMethod?.Invoke(this, new ChangedUserEventArgs { ChangedUser = user });
         }
 
         public override void Delete(User user)
         {
             base.Delete(user);
-            ////Communicator?.SendAdd(args);
-            DeleteMethod?.Invoke(this, new ChangedUserEventArgs { ChangedUser = user });
         }
+
+        protected override void NotifyAdd(User user)
+        {
+            Repo.Add(user);
+            OnUserAdded(this, new ChangedUserEventArgs { ChangedUser = user });
+        }
+
+        protected override void NotifyDelete(User user)
+        {
+            Repo.Delete(user);
+            OnUserDeleted(this, new ChangedUserEventArgs { ChangedUser = user });
+        }
+
+       
     }
     #endregion
 }

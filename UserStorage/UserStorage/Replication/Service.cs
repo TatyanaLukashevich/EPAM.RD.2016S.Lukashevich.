@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using NLog;
 using UserStorage;
-using UserStorage.Replication;
+using UserStorage.NetworkCommunication;
 using System.Threading.Tasks;
+using UserStorage.Replication;
 
 namespace Replication
 {
     public abstract class Service : MarshalByRefObject
     {
+        public Communicator Communicator { get; set; }
+
         protected ReaderWriterLockSlim locker = new ReaderWriterLockSlim();
+
         protected bool LoggingEnabled = true;
+
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public UserRepository Repo { get; set; }
@@ -35,9 +39,9 @@ namespace Replication
                 {
                     Logger.Info("Invoke add event");
                 }
-                    
-                Repo.Add(user);
-                Task.Run(() =>HandleAddEvent(this, new ChangedUserEventArgs() { ChangedUser = user }));
+
+                NotifyAdd(user);
+                
             }
             finally
             {
@@ -54,8 +58,8 @@ namespace Replication
                 {
                     Logger.Info("Invoke delete event");
                 }
-
-                Task.Run(() => HandleDeleteEvent(this, new ChangedUserEventArgs() { ChangedUser = user }));
+                NotifyDelete(user);
+                //Task.Run(() => HandleDeleteEvent(this, new ChangedUserEventArgs() { ChangedUser = user }));
                 Repo.Delete(user);
             }
             finally
@@ -80,26 +84,48 @@ namespace Replication
             return listId;
         }
 
-        public virtual void Save()
+        public virtual void WriteToXML()
         {
             Repo.WriteToXML();
         }
 
-        public virtual void Load()
+        public virtual void ReadFromXML()
         {
-            Repo.ReadFromXML();
+           var users =  Repo.ReadFromXML();
+                
         }
 
-        public void HandleAddEvent(object sender, ChangedUserEventArgs args)
+        public virtual void AddCommunicator(Communicator communicator)
         {
-            Logger.Info("HandleAddEvent called");
-            Debug.WriteLine("Add method notification");
+            if (communicator == null)
+                return;
+            Communicator = communicator;
         }
 
-        public void HandleDeleteEvent(object sender, ChangedUserEventArgs args)
+        protected abstract void NotifyAdd(User user);
+
+        protected abstract void NotifyDelete(User user);
+
+
+        protected virtual void OnUserDeleted(object sender, ChangedUserEventArgs args)
         {
-            Logger.Info("HandleDeleteEvent called");
-            Debug.WriteLine("Delete method notification");
+            Communicator?.SendDelete(args);
         }
+
+        protected virtual void OnUserAdded(object sender, ChangedUserEventArgs args)
+        {
+            Communicator?.SendAdd(args);
+        }
+        //public void HandleAddEvent(object sender, ChangedUserEventArgs args)
+        //{
+        //    Logger.Info("HandleAddEvent called");
+        //    Debug.WriteLine("Add method notification");
+        //}
+
+        //public void HandleDeleteEvent(object sender, ChangedUserEventArgs args)
+        //{
+        //    Logger.Info("HandleDeleteEvent called");
+        //    Debug.WriteLine("Delete method notification");
+        //}
     }
 }

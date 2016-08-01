@@ -3,6 +3,8 @@ using System.Diagnostics;
 using NLog;
 using UserStorage;
 using UserStorage.Replication;
+using UserStorage.NetworkCommunication;
+using System.Threading.Tasks;
 
 namespace Replication
 {
@@ -17,8 +19,8 @@ namespace Replication
         #region Constructors
         public SlaveService(UserRepository repo) : base(repo)
         {
-            MasterService.GetInstance.AddMethod += OnAdded;
-            MasterService.GetInstance.DeleteMethod += OnDeleted;
+            //MasterService.GetInstance.AddMethod += OnAdded;
+            //MasterService.GetInstance.DeleteMethod += OnDeleted;
         }
         #endregion
 
@@ -33,9 +35,36 @@ namespace Replication
             throw new InvalidOperationException();
         }
 
+        public override void WriteToXML()
+        {
+            throw new InvalidOperationException();
+        }
+
+        public override void ReadFromXML()
+        {
+            throw new InvalidOperationException();
+        }
+
         public void RegisterRepository()
         {
             Logger.Info("Slave Repository have been registered");
+        }
+
+        public override void AddCommunicator(Communicator communicator)
+        {
+            base.AddCommunicator(communicator);
+            Communicator.UserAdded += OnAdded;
+            Communicator.UserDeleted += OnDeleted;
+        }
+
+          protected override void NotifyAdd(User user)
+        {
+            Task.Run(() => OnUserAdded(this, new ChangedUserEventArgs() { ChangedUser = user }));
+        }
+
+        protected override void NotifyDelete(User user)
+        {
+            throw new InvalidOperationException();
         }
 
         private void OnAdded(object sender, ChangedUserEventArgs args)
@@ -43,8 +72,8 @@ namespace Replication
             locker.EnterWriteLock();
             try
             {
-                Debug.WriteLine("On Added! " + AppDomain.CurrentDomain.FriendlyName);
                 Repo.Add(args.ChangedUser);
+                Logger.Info("Collection of users for slave was updated. Added new user.");
             }
             finally
             {
@@ -58,12 +87,38 @@ namespace Replication
             try
             {
                 Repo.Delete(args.ChangedUser);
+                Logger.Info("Collection of users for slave was updated. User was deleted.");
             }
             finally
             {
                 locker.ExitWriteLock();
             }
         }
+        //private void OnAdded(object sender, ChangedUserEventArgs args)
+        //{
+        //    locker.EnterWriteLock();
+        //    try
+        //    {
+        //        Debug.WriteLine("On Added! " + AppDomain.CurrentDomain.FriendlyName);
+        //        Repo.Add(args.ChangedUser);
+        //    }
+        //    finally
+        //    {
+        //        locker.ExitWriteLock();
+        //    }
+        //}
+
+        //private void OnDeleted(object sender, ChangedUserEventArgs args)
+        //{
+        //    locker.EnterWriteLock();
+        //    try
+        //    {
+        //        Repo.Delete(args.ChangedUser);
+        //    }
+        //    finally
+        //    {
+        //        locker.ExitWriteLock();
+        //    }
+    }
         #endregion
     }
-}

@@ -16,6 +16,6 @@ namespace UserStorage
 
         void WriteToXML();
 
-        void ReadFromXML();
+        List<User> ReadFromXML();
     }
 }

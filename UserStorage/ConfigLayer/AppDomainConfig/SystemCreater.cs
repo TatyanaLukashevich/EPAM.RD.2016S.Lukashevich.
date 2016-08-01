@@ -22,11 +22,12 @@ namespace ConfigLayer.AppDomainConfig
 
         public static List<Communicator> SlaveCommunicators { get; set; }
 
-        public static void CreateSystem()
+        public static IEnumerable<Service> CreateSystem()
         {
+            var services = new List<Service>();
             ReplicationSection section = (ReplicationSection)ConfigurationManager.GetSection("ReplicationSection");
             Slaves = new List<Service>();
-            SlaveCommunicators = new List<Communicator>();
+            //SlaveCommunicators = new List<Communicator>();
             List<IPEndPoint> ipEndPoints = new List<IPEndPoint>();
             for (int i = 0; i < section.ServicesItems.Count; i++)
             {
@@ -41,21 +42,26 @@ namespace ConfigLayer.AppDomainConfig
                 {
                     Slaves.Add(service);
                     Receiver receiver = new Receiver(IPAddress.Parse(section.ServicesItems[i].IpAddress), Int32.Parse(section.ServicesItems[i].Port));
-                    var communicator = new Communicator(receiver) { Service = service };
-                    SlaveCommunicators.Add(communicator);
-                    Task task = receiver.AcceptConnection();
-                    task.ContinueWith((t) => communicator.RunReceiver());
+                    var communicator = new Communicator(receiver);
+                    service.AddCommunicator(communicator);
+                    receiver.AcceptConnection();
+                    service.Communicator.RunReceiver();
                     ipEndPoints.Add(new IPEndPoint(IPAddress.Parse(section.ServicesItems[i].IpAddress), Int32.Parse(section.ServicesItems[i].Port)));
+                    service.Repo.ReadFromXML();
+
                 }
                 else
                 {
+                    MasterCommunicator = new Communicator(new Sender());
                     Master = service;
-                    MasterCommunicator = new Communicator(new Sender())
-                    {
-                        Service = Master
-                    };
+                    MasterCommunicator.Connect(ipEndPoints);
                 }
+               
+                services.Add(service);
             }
+
+            
+            return services;
         }
     }
 }

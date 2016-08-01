@@ -74,21 +74,5 @@ namespace UserStorageTest
             repo.Add(user);
             var required = repo.FindByTag(repo.FindById, "4");
         }
-
-        [TestMethod]
-        public void SaveToXML_ReadFromXML_Test()
-        {
-            var repo = new UserRepository();
-            List<VisaRecord> records = new List<VisaRecord>();
-            var user = new User("Pol", "Larch", new DateTime(1988, 2, 17), Gender.Male, records);
-            var user2 = new User("Thom", "Yorke", new DateTime(1968, 7, 10), Gender.Male, records);
-            repo.Add(user);
-            repo.Add(user2);
-            repo.WriteToXML();
-            repo.Delete(user);
-            repo.Delete(user2);
-            repo.ReadFromXML();
-            Assert.AreEqual(2, repo.UserCollection.Count);
-        }
     }  
 }
