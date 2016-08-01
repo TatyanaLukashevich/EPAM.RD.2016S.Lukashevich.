@@ -40,7 +40,7 @@ namespace UserStorage.NetworkCommunication
         {
             BinaryFormatter formatter = new BinaryFormatter();
             Message message;
-            if (handler==null)
+            if (handler == null)
             {
                 return null;
             }

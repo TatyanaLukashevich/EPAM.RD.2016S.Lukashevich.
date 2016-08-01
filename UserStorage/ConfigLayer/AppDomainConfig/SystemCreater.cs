@@ -2,29 +2,29 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Reflection;
+using System.Net;
+using System.Threading.Tasks;
 using ConfigLayer.CustomSectionConfig;
 using NLog;
 using Replication;
 using UserStorage.NetworkCommunication;
-using System.Net;
-using System.Threading.Tasks;
 
 namespace ConfigLayer.AppDomainConfig
 {
     public static class SystemCreater
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
+        
+        public static List<Service> Services { get; set; }
         public static Service Master { get; set; }
 
         public static List<Service> Slaves { get; private set; }
 
         public static Communicator MasterCommunicator { get; set; }
 
-        public static List<Communicator> SlaveCommunicators { get; set; }
-
-        public static void CreateSystem()
+        public static IEnumerable<Service> CreateSystem()
         {
+            Services = new List<Service>();
             Slaves = new List<Service>();
             List<IPEndPoint> slavesIPEndPoints = new List<IPEndPoint>();
 
@@ -38,18 +38,18 @@ namespace ConfigLayer.AppDomainConfig
                 var type = typeof(DomainLoader);
                 var loader = (DomainLoader)newAppDomain.CreateInstanceAndUnwrap(Assembly.GetExecutingAssembly().FullName, typeof(DomainLoader).FullName);
                 var service = loader.CreateInstance(section.ServicesItems[i].ServiceType);
-
+                Services.Add(service);
                 if (section.ServicesItems[i].ServiceType.Contains("Slave"))
                 {
                     try
                     {
                         Slaves.Add(service);
-                        receiver = new Receiver(IPAddress.Parse(section.ServicesItems[i].IpAddress), Int32.Parse(section.ServicesItems[i].Port));
+                        receiver = new Receiver(IPAddress.Parse(section.ServicesItems[i].IpAddress), int.Parse(section.ServicesItems[i].Port));
                         var communicator = new Communicator(receiver);
                         service.AddCommunicator(communicator);
                         Task task = receiver.AcceptConnection();
                         service.Communicator.RunReceiver();
-                        slavesIPEndPoints.Add(new IPEndPoint(IPAddress.Parse(section.ServicesItems[i].IpAddress), Int32.Parse(section.ServicesItems[i].Port)));
+                        slavesIPEndPoints.Add(new IPEndPoint(IPAddress.Parse(section.ServicesItems[i].IpAddress), int.Parse(section.ServicesItems[i].Port)));
                     }
                     catch (Exception ex)
                     {
@@ -61,7 +61,7 @@ namespace ConfigLayer.AppDomainConfig
                     MasterCommunicator = new Communicator(new Sender());
                     Master = service;
                     Master.AddCommunicator(MasterCommunicator);
-                }
+                }         
             }
 
             MasterCommunicator.Connect(slavesIPEndPoints);
@@ -70,6 +70,8 @@ namespace ConfigLayer.AppDomainConfig
             {
                 service.Communicator.RunReceiver();
             }
+
+            return Services;
         }
     }
 }

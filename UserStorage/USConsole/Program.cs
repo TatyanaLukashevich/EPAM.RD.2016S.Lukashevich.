@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ConfigLayer.AppDomainConfig;
-using UserStorage;
-using System.Net;
-using System.Net.Sockets;
-using System.Threading.Tasks;
-using UserStorage.NetworkCommunication;
 using System.Threading;
+using ConfigLayer.AppDomainConfig;
 using Replication;
-using System.Text;
+using UserStorage;
 using UserStorage.Entities;
 
 namespace UserStorageConsole
@@ -18,13 +13,14 @@ namespace UserStorageConsole
     {
         static void Main(string[] args)
         {
-            SystemCreater.CreateSystem();
+            var services = SystemCreater.CreateSystem();
+            MasterService master = (MasterService)SystemCreater.Master;
+             var slaves = SystemCreater.Services.Where(s => s is SlaveService).Select(s => (SlaveService)s);
             for (int i = 0; i < 10; i++)
             {
-                var user = new User("Lily" + i, "Pad" + i, new DateTime(1960, 7, 20, 18, 30, 25),
-                Gender.Male);
+                var user = new User("Lily" + i, "Pad" + i, new DateTime(1960, 7, 20, 18, 30, 25), Gender.Male);
                
-                MasterService master = (MasterService)SystemCreater.Master;
+                master = (MasterService)SystemCreater.Master;
                 master.Communicator = SystemCreater.MasterCommunicator;
                 master.Add(user);
 
@@ -36,15 +32,18 @@ namespace UserStorageConsole
                 Thread.Sleep(100);
             }
 
-            //RunSlaves(slaves);
-            //RunMaster(master);
-            //while (true)
-            //{
-            //    var quit = Console.ReadKey();
-            //    if (quit.Key == ConsoleKey.Escape)
-            //        break;
-            //}
-            //master.WriteToXML();
+            RunSlaves(slaves);
+            RunMaster(master);
+            while (true)
+            {
+                var quit = Console.ReadKey();
+                if (quit.Key == ConsoleKey.Escape)
+                {
+                    break;
+                }
+            }
+
+            master.WriteToXML();
         }
 
         private static void RunMaster(MasterService master)
@@ -58,7 +57,10 @@ namespace UserStorageConsole
                     var serachresult = master.FindByTag(u => u.Name != null);
                     Console.Write("Master search results: ");
                     foreach (var result in serachresult)
+                    {
                         Console.Write(result + " ");
+                    }
+                       
                     Console.WriteLine();
                     Thread.Sleep(rand.Next(1000, 5000));
                 }
@@ -68,9 +70,10 @@ namespace UserStorageConsole
             {
                 var users = new List<User>
                 {
-                    new User { Name = "Lily", LastName = "Pad"},
-                    new User { Name = "Marsh", LastName = "Mellow"},
+                    new User { Name = "Lily", LastName = "Pad" },
+                    new User { Name = "Marsh", LastName = "Mellow" },
                 };
+
                 User userToDelete = null;
 
                 while (true)
@@ -79,14 +82,19 @@ namespace UserStorageConsole
                     {
                         int addChance = rand.Next(0, 3);
                         if (addChance == 0)
+                        {
                             master.Add(user);
+                        }                         
 
                         Thread.Sleep(rand.Next(1000, 5000));
                         if (userToDelete != null)
                         {
                             int deleteChance = rand.Next(0, 3);
                             if (deleteChance == 0)
+                            {
                                 userToDelete = user;
+                            }
+                               
                             master.Delete(user);
                         }
                        
@@ -115,11 +123,13 @@ namespace UserStorageConsole
                         var userIds = slave.FindByTag(u => !string.IsNullOrWhiteSpace(u.Name));
                         Console.Write(" Slave search results: ");
                         foreach (var user in userIds)
+                        {
                             Console.Write(user + " ");
+                        }
+
                         Console.WriteLine();
                         Thread.Sleep((int)(rand.NextDouble() * 5000));
                     }
-
                 });
                 slaveThread.IsBackground = true;
                 slaveThread.Start();

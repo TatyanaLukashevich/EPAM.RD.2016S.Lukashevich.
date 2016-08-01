@@ -49,8 +49,6 @@ namespace Replication
             Repo.Delete(user);
             OnUserDeleted(this, new ChangedUserEventArgs { ChangedUser = user });
         }
-
-       
     }
     #endregion
 }

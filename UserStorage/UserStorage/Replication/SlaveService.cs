@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
+using System.Threading.Tasks;
 using NLog;
 using UserStorage;
-using UserStorage.Replication;
 using UserStorage.NetworkCommunication;
-using System.Threading.Tasks;
+using UserStorage.Replication;
 
 namespace Replication
 {
@@ -19,8 +18,6 @@ namespace Replication
         #region Constructors
         public SlaveService(UserRepository repo) : base(repo)
         {
-            //MasterService.GetInstance.AddMethod += OnAdded;
-            //MasterService.GetInstance.DeleteMethod += OnDeleted;
         }
         #endregion
 
@@ -57,7 +54,7 @@ namespace Replication
             Communicator.UserDeleted += OnDeleted;
         }
 
-          protected override void NotifyAdd(User user)
+        protected override void NotifyAdd(User user)
         {
             Task.Run(() => OnUserAdded(this, new ChangedUserEventArgs() { ChangedUser = user }));
         }
@@ -94,31 +91,6 @@ namespace Replication
                 locker.ExitWriteLock();
             }
         }
-        //private void OnAdded(object sender, ChangedUserEventArgs args)
-        //{
-        //    locker.EnterWriteLock();
-        //    try
-        //    {
-        //        Debug.WriteLine("On Added! " + AppDomain.CurrentDomain.FriendlyName);
-        //        Repo.Add(args.ChangedUser);
-        //    }
-        //    finally
-        //    {
-        //        locker.ExitWriteLock();
-        //    }
-        //}
-
-        //private void OnDeleted(object sender, ChangedUserEventArgs args)
-        //{
-        //    locker.EnterWriteLock();
-        //    try
-        //    {
-        //        Repo.Delete(args.ChangedUser);
-        //    }
-        //    finally
-        //    {
-        //        locker.ExitWriteLock();
-        //    }
     }
-        #endregion
-    }
+    #endregion
+}

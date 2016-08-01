@@ -1,9 +1,6 @@
-﻿using Replication;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using UserStorage.Replication;
@@ -13,10 +10,6 @@ namespace UserStorage.NetworkCommunication
     [Serializable]
     public class Communicator : MarshalByRefObject
     {
-        public event EventHandler<ChangedUserEventArgs> UserAdded;
-
-        public event EventHandler<ChangedUserEventArgs> UserDeleted;
-
         private Sender sender;
 
         private Receiver receiver;
@@ -24,8 +17,6 @@ namespace UserStorage.NetworkCommunication
         private Task recieverTask;
 
         private CancellationTokenSource tokenSource;
-
-        //public Service Service { get; set; }
 
         public Communicator(Sender sender, Receiver receiver)
         {
@@ -35,14 +26,15 @@ namespace UserStorage.NetworkCommunication
 
         public Communicator(Sender sender) : this(sender, null)
         {
-
         }
 
         public Communicator(Receiver receiver) : this(null, receiver)
         {
-
         }
 
+        public event EventHandler<ChangedUserEventArgs> UserAdded;
+
+        public event EventHandler<ChangedUserEventArgs> UserDeleted;
 
         public void Connect(IEnumerable<IPEndPoint> endPoints)
         {
@@ -56,7 +48,11 @@ namespace UserStorage.NetworkCommunication
 
         public void RunReceiver()
         {
-            if (receiver == null) return;
+            if (receiver == null)
+            {
+                return;
+            }
+                
             tokenSource = new CancellationTokenSource();
             recieverTask = Task.Run((Action)Receive, tokenSource.Token);
         }
@@ -72,7 +68,9 @@ namespace UserStorage.NetworkCommunication
         public void SendAdd(ChangedUserEventArgs args)
         {
             if (sender == null)
+            {
                 return;
+            }
 
             Send(new Message
             {
@@ -83,7 +81,9 @@ namespace UserStorage.NetworkCommunication
         public void SendDelete(ChangedUserEventArgs args)
         {
             if (sender == null)
+            {
                 return;
+            }
 
             Send(new Message
             {
@@ -92,24 +92,34 @@ namespace UserStorage.NetworkCommunication
             });
         }
 
+        public void Dispose()
+        {
+            receiver?.Dispose();
+            sender?.Dispose();
+        }
+
         private void Receive()
         {
             while (true)
             {
                 if (tokenSource.IsCancellationRequested) return;
                 var message = receiver.Receive();
-                if(message==null)
+                if (message == null)
                 {
                     return;
                 }
+
                 var args = new ChangedUserEventArgs
                 {
                     ChangedUser = message.User
                 };
+
                 switch (message.MethodType)
                 {
-                    case MethodType.Add: OnUserAdded(this, args); break;
-                    case MethodType.Delete: OnUserDeleted(this, args); break;
+                    case MethodType.Add: OnUserAdded(this, args);
+                        break;
+                    case MethodType.Delete: OnUserDeleted(this, args);
+                        break;
                 }
             }
         }
@@ -119,20 +129,14 @@ namespace UserStorage.NetworkCommunication
             sender.Send(message);
         }
 
-        protected virtual void OnUserDeleted(object sender, ChangedUserEventArgs args)
+        private void OnUserDeleted(object sender, ChangedUserEventArgs args)
         {
             UserDeleted?.Invoke(sender, args);
         }
 
-        protected virtual void OnUserAdded(object sender, ChangedUserEventArgs args)
+        private void OnUserAdded(object sender, ChangedUserEventArgs args)
         {
             UserAdded?.Invoke(sender, args);
-        }
-
-        public void Dispose()
-        {
-            receiver?.Dispose();
-            sender?.Dispose();
         }
     }
 }

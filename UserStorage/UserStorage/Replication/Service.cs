@@ -4,7 +4,6 @@ using System.Threading;
 using NLog;
 using UserStorage;
 using UserStorage.NetworkCommunication;
-using System.Threading.Tasks;
 using UserStorage.Replication;
 
 namespace Replication
@@ -15,7 +14,7 @@ namespace Replication
 
         protected ReaderWriterLockSlim locker = new ReaderWriterLockSlim();
 
-        protected bool LoggingEnabled = true;
+        protected bool loggingEnabled = true;
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -35,7 +34,7 @@ namespace Replication
             locker.EnterWriteLock();
             try
             {
-                if (LoggingEnabled)
+                if (loggingEnabled)
                 {
                     Logger.Info("Invoke add event");
                 }
@@ -54,13 +53,12 @@ namespace Replication
             locker.EnterWriteLock();
             try
             {
-                if (LoggingEnabled)
+                if (loggingEnabled)
                 {
                     Logger.Info("Invoke delete event");
                 }
-                NotifyDelete(user);
-                //Task.Run(() => HandleDeleteEvent(this, new ChangedUserEventArgs() { ChangedUser = user }));
 
+                NotifyDelete(user);
                 Repo.Delete(user);
             }
             finally
@@ -99,7 +97,10 @@ namespace Replication
         public virtual void AddCommunicator(Communicator communicator)
         {
             if (communicator == null)
+            {
                 return;
+            }
+               
             Communicator = communicator;
         }
 
@@ -116,17 +117,6 @@ namespace Replication
         protected virtual void OnUserAdded(object sender, ChangedUserEventArgs args)
         {
             Communicator?.SendAdd(args);
-        }
-        //public void HandleAddEvent(object sender, ChangedUserEventArgs args)
-        //{
-        //    Logger.Info("HandleAddEvent called");
-        //    Debug.WriteLine("Add method notification");
-        //}
-
-        //public void HandleDeleteEvent(object sender, ChangedUserEventArgs args)
-        //{
-        //    Logger.Info("HandleDeleteEvent called");
-        //    Debug.WriteLine("Delete method notification");
-        //}
+        } 
     }
 }
