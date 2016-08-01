@@ -12,7 +12,7 @@ namespace UserStorage
 
         void Delete(User user);
 
-        List<int> FindByTag(Func<string, List<User>> methodTag, string tag);
+        List<int> FindByTag(Func<User, bool> criteria);
 
         void WriteToXML();
 

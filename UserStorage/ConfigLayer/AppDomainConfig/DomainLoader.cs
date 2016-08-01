@@ -10,13 +10,14 @@ namespace ConfigLayer.AppDomainConfig
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         public Service CreateInstance(string type)
         {
+            UserRepository repo = new UserRepository();
            if (type.Equals("Master"))
             {
-                return new MasterService(new UserRepository());
+                return new MasterService(repo);
             }
             else
             {
-                return new SlaveService(new UserRepository());
+                return new SlaveService(repo);
             }
         }
     }

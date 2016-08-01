@@ -14,6 +14,7 @@ namespace ConfigLayer.AppDomainConfig
     public static class SystemCreater
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         public static Service Master { get; set; }
 
         public static List<Service> Slaves { get; private set; }
@@ -22,47 +23,55 @@ namespace ConfigLayer.AppDomainConfig
 
         public static List<Communicator> SlaveCommunicators { get; set; }
 
-        public static IEnumerable<Service> CreateSystem()
+        public static void CreateSystem()
         {
-            var services = new List<Service>();
-            ReplicationSection section = (ReplicationSection)ConfigurationManager.GetSection("ReplicationSection");
             Slaves = new List<Service>();
-            //SlaveCommunicators = new List<Communicator>();
-            List<IPEndPoint> ipEndPoints = new List<IPEndPoint>();
+            List<IPEndPoint> slavesIPEndPoints = new List<IPEndPoint>();
+
+            var section = (ReplicationSection)ConfigurationManager.GetSection("ReplicationSection");
+            Receiver receiver = null;
+
             for (int i = 0; i < section.ServicesItems.Count; i++)
             {
-                var newAppDomain = AppDomain.CreateDomain(section.ServicesItems[i].Path);
-                Logger.Info("Domain for {0} has been created", section.ServicesItems[i].ServiceType);
+                AppDomain newAppDomain = AppDomain.CreateDomain(section.ServicesItems[i].ServiceType);
+                Logger.Info("Domain for {0} is created", section.ServicesItems[i].ServiceType);
                 var type = typeof(DomainLoader);
-                var loader = (DomainLoader)newAppDomain.CreateInstanceAndUnwrap(Assembly.GetAssembly(type).FullName, type.FullName);
-
+                var loader = (DomainLoader)newAppDomain.CreateInstanceAndUnwrap(Assembly.GetExecutingAssembly().FullName, typeof(DomainLoader).FullName);
                 var service = loader.CreateInstance(section.ServicesItems[i].ServiceType);
 
-                if (section.ServicesItems[i].ServiceType.Equals("Slave"))
+                if (section.ServicesItems[i].ServiceType.Contains("Slave"))
                 {
-                    Slaves.Add(service);
-                    Receiver receiver = new Receiver(IPAddress.Parse(section.ServicesItems[i].IpAddress), Int32.Parse(section.ServicesItems[i].Port));
-                    var communicator = new Communicator(receiver);
-                    service.AddCommunicator(communicator);
-                    receiver.AcceptConnection();
-                    service.Communicator.RunReceiver();
-                    ipEndPoints.Add(new IPEndPoint(IPAddress.Parse(section.ServicesItems[i].IpAddress), Int32.Parse(section.ServicesItems[i].Port)));
-                    service.Repo.ReadFromXML();
-
+                    try
+                    {
+                        Slaves.Add(service);
+                        receiver = new Receiver(IPAddress.Parse(section.ServicesItems[i].IpAddress), Int32.Parse(section.ServicesItems[i].Port));
+                        var communicator = new Communicator(receiver);
+                        service.AddCommunicator(communicator);
+                        Task task = receiver.AcceptConnection();
+                        service.Communicator.RunReceiver();
+                        slavesIPEndPoints.Add(new IPEndPoint(IPAddress.Parse(section.ServicesItems[i].IpAddress), Int32.Parse(section.ServicesItems[i].Port)));
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Error(ex.Message);
+                    }
                 }
                 else
                 {
                     MasterCommunicator = new Communicator(new Sender());
                     Master = service;
-                    MasterCommunicator.Connect(ipEndPoints);
+                    Master.AddCommunicator(MasterCommunicator);
                 }
-               
-                services.Add(service);
             }
 
-            
-            return services;
+            MasterCommunicator.Connect(slavesIPEndPoints);
+
+            foreach (var service in Slaves)
+            {
+                service.Communicator.RunReceiver();
+            }
         }
     }
 }
+
 

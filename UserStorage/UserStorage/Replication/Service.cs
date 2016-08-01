@@ -39,14 +39,9 @@ namespace Replication
                 {
                     Logger.Info("Invoke add event");
                 }
-<<<<<<< HEAD
 
-                NotifyAdd(user);
+               NotifyAdd(user);
                 
-=======
-                    
-                Repo.Add(user);
->>>>>>> 95b7eaea705078862778b25dadedfced1dd9816f
             }
             finally
             {
@@ -63,11 +58,9 @@ namespace Replication
                 {
                     Logger.Info("Invoke delete event");
                 }
-<<<<<<< HEAD
                 NotifyDelete(user);
                 //Task.Run(() => HandleDeleteEvent(this, new ChangedUserEventArgs() { ChangedUser = user }));
-=======
->>>>>>> 95b7eaea705078862778b25dadedfced1dd9816f
+
                 Repo.Delete(user);
             }
             finally
@@ -76,13 +69,13 @@ namespace Replication
             }
         }
 
-        public virtual List<int> FindByTag(Func<string, List<User>> methodTag, string tag)
+        public virtual List<int> FindByTag(Func<User, bool> criteria)
         {
             List<int> listId = new List<int>();
             locker.EnterReadLock();
             try
             {
-               listId = Repo.FindByTag(Repo.FindById, tag);
+               listId = Repo.FindByTag(criteria);
             }
             finally
             {

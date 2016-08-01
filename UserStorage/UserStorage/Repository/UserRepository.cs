@@ -44,10 +44,6 @@ namespace UserStorage
                 throw new ArgumentException("user is too young");
             }
 
-            //if (UserCollection.Contains(user))
-            //{
-            //    throw new InvalidOperationException("user already exist");
-            //}
             else
             {
                 this.GenerateId(user);
@@ -71,23 +67,10 @@ namespace UserStorage
             }
         }
 
-        public List<int> FindByTag(Func<string, List<User>> methodTag, string tag)
+        public List<int> FindByTag(Func<User, bool> criteria)
         {
-            var required = UserCollection.FindAll(user => methodTag(tag).Contains(user));
-            var requiredId = new List<int>();
-            if (required.Count == 0)
-            {
-                throw new InvalidOperationException("user is not found");
-            }
-            else
-            {
-                foreach (var item in required)
-                {
-                    requiredId.Add(item.ID);
-                }
-            }
-
-                return requiredId;
+            var required = UserCollection.Where(criteria).Select(u => u.ID).ToList();
+                return required;
         }
 
         public void WriteToXML()
@@ -125,26 +108,6 @@ namespace UserStorage
             Logger.Info("Iterator was restored");
             return UserCollection.LastOrDefault().ID;
         }
-
-        #region Find by tag methods
-        public List<User> FindById(string id)
-        {
-            var required = this.UserCollection.FindAll(user => user.ID.ToString() == id);
-            return required;
-        }
-
-        public List<User> FindByLastname(string lastname)
-        {
-            var required = this.UserCollection.FindAll(user => user.LastName == lastname);
-            return required;
-        }
-
-        public List<User> FindByDoB(string dateOfBirth)
-        {
-            var required = this.UserCollection.FindAll(user => user.DateOfBirth.ToString() == dateOfBirth);
-            return required;
-        }
-        #endregion
         #endregion
 
         #region Private Methods

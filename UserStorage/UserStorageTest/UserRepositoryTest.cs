@@ -60,7 +60,7 @@ namespace UserStorageTest
             var user2 = new User("Thom", "Yorke", new DateTime(1968, 7, 10), Gender.Male, records);
             repo.Add(user);
             repo.Add(user2);
-            var required = repo.FindByTag(repo.FindByLastname, "Yorke");
+            var required = repo.FindByTag(u => u.LastName == "Yorke");
             Assert.AreEqual(required[0], user2.ID);
         }
 
@@ -72,7 +72,7 @@ namespace UserStorageTest
             List<VisaRecord> records = new List<VisaRecord>();
             var user = new User("Pol", "Larch", new DateTime(1988, 2, 17), Gender.Male, records);
             repo.Add(user);
-            var required = repo.FindByTag(repo.FindById, "4");
+            var required = repo.FindByTag(u => u.ID == 4);
         }
     }  
 }
