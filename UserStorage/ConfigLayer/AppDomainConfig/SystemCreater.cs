@@ -39,6 +39,7 @@ namespace ConfigLayer.AppDomainConfig
                 var loader = (DomainLoader)newAppDomain.CreateInstanceAndUnwrap(Assembly.GetExecutingAssembly().FullName, typeof(DomainLoader).FullName);
                 var service = loader.CreateInstance(section.ServicesItems[i].ServiceType);
                 Services.Add(service);
+                service.Name = section.ServicesItems[i].Path;
                 if (section.ServicesItems[i].ServiceType.Contains("Slave"))
                 {
                     try

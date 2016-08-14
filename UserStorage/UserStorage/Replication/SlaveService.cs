@@ -12,16 +12,12 @@ namespace Replication
         #region Private Fields
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        private static int slaveCount = 0;
-
         public AppDomain SlaveDomain { get; private set; }
         #endregion
 
         #region Constructors
         public SlaveService(UserRepository repo) : base(repo)
         {
-            slaveCount++;
-            Name = "Slave" + slaveCount;
         }
         #endregion
 
