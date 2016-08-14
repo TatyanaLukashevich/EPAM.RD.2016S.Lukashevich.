@@ -19,7 +19,7 @@ namespace Replication
         #region Constructors
         public MasterService(UserRepository repo) : base(repo)
         {
-            Name = "master";
+            Name = "Master";
         }
         #endregion
 

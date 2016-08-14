@@ -6,6 +6,9 @@ using ConfigLayer.AppDomainConfig;
 using Replication;
 using UserStorage;
 using UserStorage.Entities;
+using ConfigLayer.WCF;
+using System.Net;
+using System.Net.Sockets;
 
 namespace UserStorageConsole
 {
@@ -13,12 +16,15 @@ namespace UserStorageConsole
     {
         static void Main(string[] args)
         {
+            string localAddress = GetLocalIpAddress();
             var services = SystemCreater.CreateSystem();
             MasterService master = (MasterService)SystemCreater.Master;
+            string a = $"http://{localAddress}:8080/Service/" + master.Name;
+            Console.WriteLine(a);
              var slaves = SystemCreater.Services.Where(s => s is SlaveService).Select(s => (SlaveService)s);
             for (int i = 0; i < 10; i++)
             {
-                var user = new User("Lily" + i, "Pad" + i, new DateTime(1960, 7, 20, 18, 30, 25), Gender.Male);
+                var user = new User("Lily" + i, "Pad" + i, new DateTime(1960, 7, 20, 18, 30, 25), Gender.Female);
                
                 master = (MasterService)SystemCreater.Master;
                 master.Communicator = SystemCreater.MasterCommunicator;
@@ -31,21 +37,38 @@ namespace UserStorageConsole
                 }
                 Thread.Sleep(100);
             }
-
-            RunSlaves(slaves);
-            RunMaster(master);
-            while (true)
+            foreach (var userService in services)
             {
-                var quit = Console.ReadKey();
-                if (quit.Key == ConsoleKey.Escape)
-                {
-                    break;
-                }
+                WcfCreator.CreateWcf(userService);
             }
 
-            master.WriteToXML();
-        }
+            Console.ReadKey();
 
+            //RunSlaves(slaves);
+            //RunMaster(master);
+            //while (true)
+            //{
+            //    var quit = Console.ReadKey();
+            //    if (quit.Key == ConsoleKey.Escape)
+            //    {
+            //        break;
+            //    }
+            //}
+
+            //master.WriteToXML();
+        }
+        private static string GetLocalIpAddress()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return ip.ToString();
+                }
+            }
+            throw new Exception("Local IP Address Not Found!");
+        }
         private static void RunMaster(MasterService master)
         {
             Random rand = new Random();
