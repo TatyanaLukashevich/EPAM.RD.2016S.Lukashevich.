@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="c6cfb307-535d-4360-9f1a-b7dcc038006b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="f29666e8-d69f-4188-bcfc-01836257058d" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,14 +22,14 @@
     <MetadataSource Address=" http://192.168.86.51:8080/Service/master" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="master.xsd" MetadataType="Schema" ID="e17f288d-79ce-48bb-8309-03e6f6687ccb" SourceId="1" SourceUrl="http://192.168.86.51:8080/Service/master?xsd=xsd0" />
-    <MetadataFile FileName="master1.xsd" MetadataType="Schema" ID="a1bf302c-a889-4473-af88-351946dc63df" SourceId="1" SourceUrl="http://192.168.86.51:8080/Service/master?xsd=xsd3" />
-    <MetadataFile FileName="master2.xsd" MetadataType="Schema" ID="34799503-be4e-46c7-b717-84c4051fb134" SourceId="1" SourceUrl="http://192.168.86.51:8080/Service/master?xsd=xsd2" />
-    <MetadataFile FileName="MasterService.wsdl" MetadataType="Wsdl" ID="0644b198-58c5-4e61-bb64-805bbb574b43" SourceId="1" SourceUrl="http://192.168.86.51:8080/Service/master?wsdl" />
-    <MetadataFile FileName="master3.xsd" MetadataType="Schema" ID="1ebcca19-595c-45bb-90cb-871910eaf3a0" SourceId="1" SourceUrl="http://192.168.86.51:8080/Service/master?xsd=xsd5" />
-    <MetadataFile FileName="master4.xsd" MetadataType="Schema" ID="004d4528-df30-4b08-860e-f682d8b2a4ea" SourceId="1" SourceUrl="http://192.168.86.51:8080/Service/master?xsd=xsd4" />
-    <MetadataFile FileName="master.disco" MetadataType="Disco" ID="1a8470da-dd30-4fe5-9d49-8a3bd0a84b86" SourceId="1" SourceUrl="http://192.168.86.51:8080/Service/master?disco" />
-    <MetadataFile FileName="master5.xsd" MetadataType="Schema" ID="09aefe28-3f79-4f49-a5ac-97694cd440f7" SourceId="1" SourceUrl="http://192.168.86.51:8080/Service/master?xsd=xsd1" />
+    <MetadataFile FileName="master.xsd" MetadataType="Schema" ID="ae98457b-cee3-45a0-a273-d651301e5743" SourceId="1" SourceUrl="http://192.168.86.51:8080/Service/master?xsd=xsd0" />
+    <MetadataFile FileName="master1.xsd" MetadataType="Schema" ID="e211dafc-7185-4f65-babc-65175f40cc19" SourceId="1" SourceUrl="http://192.168.86.51:8080/Service/master?xsd=xsd3" />
+    <MetadataFile FileName="master2.xsd" MetadataType="Schema" ID="9d755a3f-91bc-4641-b82e-317b954559fb" SourceId="1" SourceUrl="http://192.168.86.51:8080/Service/master?xsd=xsd2" />
+    <MetadataFile FileName="MasterService.wsdl" MetadataType="Wsdl" ID="3b3d673d-46da-48cf-a5ee-7a407de7cb1a" SourceId="1" SourceUrl="http://192.168.86.51:8080/Service/master?wsdl" />
+    <MetadataFile FileName="master3.xsd" MetadataType="Schema" ID="a5b6aeb1-551f-434d-8843-98e26928c8b6" SourceId="1" SourceUrl="http://192.168.86.51:8080/Service/master?xsd=xsd5" />
+    <MetadataFile FileName="master4.xsd" MetadataType="Schema" ID="3befbfc3-7f57-427e-bf63-78596bfec54e" SourceId="1" SourceUrl="http://192.168.86.51:8080/Service/master?xsd=xsd4" />
+    <MetadataFile FileName="master.disco" MetadataType="Disco" ID="8b22af39-6535-4a97-a840-7b22643d023f" SourceId="1" SourceUrl="http://192.168.86.51:8080/Service/master?disco" />
+    <MetadataFile FileName="master5.xsd" MetadataType="Schema" ID="5b644a3f-f15c-4791-81d5-554ab43acc7e" SourceId="1" SourceUrl="http://192.168.86.51:8080/Service/master?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
