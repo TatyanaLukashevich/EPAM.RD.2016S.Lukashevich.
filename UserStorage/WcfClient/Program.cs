@@ -1,19 +1,8 @@
-﻿using ConfigLayer.AppDomainConfig;
-using ConfigLayer.WCF;
+﻿using System;
 using Replication;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.ServiceModel.Configuration;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using UserStorage;
-using UserStorage.Entities;
 using UserStorage.Replication;
+using WcfClient.ServiceReference1;
 
 namespace WcfClient
 {
@@ -21,7 +10,16 @@ namespace WcfClient
     {
         static void Main(string[] args)
         {
-           
+            var user = new User("Amy", "Levis", new DateTime(1996, 2, 17), 0);
+
+            USContractClient client = new USContractClient();
+
+            client.Open();
+
+            client.Add(user);
+            client.FindByTag(u => u.Name == "Amy");
+
+            client.Close();
         }
 
     }

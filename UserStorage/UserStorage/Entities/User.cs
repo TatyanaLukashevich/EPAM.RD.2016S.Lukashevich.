@@ -12,7 +12,6 @@ using UserStorage.Entities;
 namespace UserStorage
 {
     [Serializable]
-    [DataContract]
     public class User 
     {
         #region constructors
@@ -22,22 +21,16 @@ namespace UserStorage
         }
 
         #region auto-properties
-        [DataMember]
         public int ID { get; set; }
 
-        [DataMember]
         public string Name { get; set; }
 
-        [DataMember]
         public string LastName { get; set; }
 
-        [DataMember]
         public DateTime DateOfBirth { get; set; }
 
-        [DataMember]
         public Gender UserGender { get; set; }
 
-        [DataMember]
         public List<VisaRecord> VisaRecords { get; set; }
         #endregion
 
