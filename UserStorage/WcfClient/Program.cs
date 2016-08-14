@@ -17,7 +17,6 @@ namespace WcfClient
             client.Open();
 
             client.Add(user);
-            client.FindByTag(u => u.Name == "Amy");
 
             client.Close();
         }
