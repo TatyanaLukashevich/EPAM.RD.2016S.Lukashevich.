@@ -5,12 +5,16 @@ using NLog;
 using UserStorage;
 using UserStorage.NetworkCommunication;
 using UserStorage.Replication;
+using System.ServiceModel;
 
 namespace Replication
 {
-    public abstract class Service : MarshalByRefObject
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, AddressFilterMode = AddressFilterMode.Any)]
+    public abstract class Service : MarshalByRefObject, IUSContract
     {
         public Communicator Communicator { get; set; }
+
+        public string Name { get; set; }
 
         protected ReaderWriterLockSlim locker = new ReaderWriterLockSlim();
 

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigLayer", "ConfigLayer\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USConsole", "USConsole\USConsole.csproj", "{FC499C0E-D666-42A4-B438-5779D89F9273}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfClient", "WcfClient\WcfClient.csproj", "{0CEF5B89-2A83-498B-B838-16C6CD939C99}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{FC499C0E-D666-42A4-B438-5779D89F9273}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC499C0E-D666-42A4-B438-5779D89F9273}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC499C0E-D666-42A4-B438-5779D89F9273}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CEF5B89-2A83-498B-B838-16C6CD939C99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CEF5B89-2A83-498B-B838-16C6CD939C99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CEF5B89-2A83-498B-B838-16C6CD939C99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CEF5B89-2A83-498B-B838-16C6CD939C99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -60,6 +60,7 @@
     <Compile Include="NetworkCommunication\Sender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Replication\ChangedUserEventArgs.cs" />
+    <Compile Include="Replication\IUSContract.cs" />
     <Compile Include="Replication\Service.cs" />
     <Compile Include="Replication\MasterService.cs" />
     <Compile Include="Replication\SlaveService.cs" />
