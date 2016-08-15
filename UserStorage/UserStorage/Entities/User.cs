@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using UserStorage.Entities;
 
 namespace UserStorage
@@ -38,7 +37,6 @@ namespace UserStorage
 
         public List<VisaRecord> VisaRecords { get; set; }
         #endregion
-
 
         #region override methods
         public override bool Equals(object obj)

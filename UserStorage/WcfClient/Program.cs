@@ -28,10 +28,6 @@ namespace WcfClient
                 //client.Delete(user);
                 client.WriteToXML();
                 int[] ids = client.FindByTag(new[] { new GenderMaleCriteria() });
-                foreach (var id in ids)
-                {
-                    Console.WriteLine(id);
-                }
 
             }
 

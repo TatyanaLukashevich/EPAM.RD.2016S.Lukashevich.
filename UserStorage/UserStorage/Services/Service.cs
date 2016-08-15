@@ -6,8 +6,8 @@ using UserStorage;
 using UserStorage.NetworkCommunication;
 using UserStorage.Replication;
 using System.ServiceModel;
-using UserStorage.SearchCriteria;
 using System.Linq;
+using UserStorage.Interface;
 
 namespace Replication
 {
@@ -89,12 +89,12 @@ namespace Replication
             return listId;
         }
 
-        public List<int> FindByTag(ICriteria<User>[] criteries)
+        public List<int> FindByTag(ICriteria<User>[] criteria)
         {
             this.locker.EnterReadLock();
             try
             {
-                return this.Repo.FindByTag(criteries).ToList();
+                return this.Repo.FindByTag(criteria).ToList();
             }
             finally
             {

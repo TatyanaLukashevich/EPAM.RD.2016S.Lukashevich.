@@ -7,7 +7,7 @@ using System.Linq;
 using System.Xml.Serialization;
 using NLog;
 using Replication;
-using UserStorage.SearchCriteria;
+using UserStorage.Interface;
 
 namespace UserStorage
 {
@@ -76,7 +76,7 @@ namespace UserStorage
 
         public List<int> FindByTag(ICriteria<User>[] criteria)
         {
-            return this.UserCollection.Where(u => criteria.All(cr => cr.MeetCriteria(u)))
+            return this.UserCollection.Where(u => criteria.All(cr => cr.IsMatch(u)))
                                     .Select(u => u.ID).ToList();
         }
 
