@@ -4,4 +4,8 @@
     <xs:sequence />
   </xs:complexType>
   <xs:element name="GenderFemCriteria" nillable="true" type="tns:GenderFemCriteria" />
+  <xs:complexType name="GenderMaleCriteria">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:element name="GenderMaleCriteria" nillable="true" type="tns:GenderMaleCriteria" />
 </xs:schema>

@@ -24,10 +24,15 @@ namespace WcfClient
                 };
                 USContractClient client = new USContractClient();
                 client.Open();
-                int id = client.Add(user);
-                user.IDk__BackingField = id;
+                user.IDk__BackingField = client.Add(user);
                 //client.Delete(user);
                 client.WriteToXML();
+                int[] ids = client.FindByTag(new[] { new GenderMaleCriteria() });
+                foreach (var id in ids)
+                {
+                    Console.WriteLine(id);
+                }
+
             }
 
             catch (FaultException excp)

@@ -91,7 +91,15 @@ namespace Replication
 
         public List<int> FindByTag(ICriteria<User>[] criteries)
         {
-            throw new NotImplementedException();
+            this.locker.EnterReadLock();
+            try
+            {
+                return this.Repo.FindByTag(criteries).ToList();
+            }
+            finally
+            {
+                this.locker.ExitReadLock();
+            }
         }
 
         public virtual void WriteToXML()

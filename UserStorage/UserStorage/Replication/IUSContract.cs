@@ -13,6 +13,7 @@ namespace UserStorage.Replication
 
     [ServiceContract]
     [ServiceKnownType(typeof(GenderFemCriteria))]
+    [ServiceKnownType(typeof(GenderMaleCriteria))]
     public interface IUSContract
     {
         [OperationContract]

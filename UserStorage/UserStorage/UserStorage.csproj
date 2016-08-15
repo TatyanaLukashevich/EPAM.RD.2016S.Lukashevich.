@@ -67,6 +67,7 @@
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Infrastucture\Validator.cs" />
     <Compile Include="SearchCriteria\GenderFemCriteria.cs" />
+    <Compile Include="SearchCriteria\GenderMaleCriteria.cs" />
     <Compile Include="SearchCriteria\ICriteria.cs" />
   </ItemGroup>
   <ItemGroup>
