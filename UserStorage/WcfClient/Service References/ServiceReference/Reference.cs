@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WcfClient.ServiceReference1 {
+namespace WcfClient.ServiceReference {
     using System.Runtime.Serialization;
     using System;
     
@@ -30,9 +30,9 @@ namespace WcfClient.ServiceReference1 {
         
         private string Namek__BackingFieldField;
         
-        private WcfClient.ServiceReference1.Gender UserGenderk__BackingFieldField;
+        private WcfClient.ServiceReference.Gender UserGenderk__BackingFieldField;
         
-        private WcfClient.ServiceReference1.VisaRecord[] VisaRecordsk__BackingFieldField;
+        private WcfClient.ServiceReference.VisaRecord[] VisaRecordsk__BackingFieldField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -97,7 +97,7 @@ namespace WcfClient.ServiceReference1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Name="<UserGender>k__BackingField", IsRequired=true)]
-        public WcfClient.ServiceReference1.Gender UserGenderk__BackingField {
+        public WcfClient.ServiceReference.Gender UserGenderk__BackingField {
             get {
                 return this.UserGenderk__BackingFieldField;
             }
@@ -110,7 +110,7 @@ namespace WcfClient.ServiceReference1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Name="<VisaRecords>k__BackingField", IsRequired=true)]
-        public WcfClient.ServiceReference1.VisaRecord[] VisaRecordsk__BackingField {
+        public WcfClient.ServiceReference.VisaRecord[] VisaRecordsk__BackingField {
             get {
                 return this.VisaRecordsk__BackingFieldField;
             }
@@ -246,29 +246,29 @@ namespace WcfClient.ServiceReference1 {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IUSContract")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference.IUSContract")]
     public interface IUSContract {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUSContract/Add", ReplyAction="http://tempuri.org/IUSContract/AddResponse")]
-        int Add(WcfClient.ServiceReference1.User user);
+        int Add(WcfClient.ServiceReference.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUSContract/Add", ReplyAction="http://tempuri.org/IUSContract/AddResponse")]
-        System.Threading.Tasks.Task<int> AddAsync(WcfClient.ServiceReference1.User user);
+        System.Threading.Tasks.Task<int> AddAsync(WcfClient.ServiceReference.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUSContract/Delete", ReplyAction="http://tempuri.org/IUSContract/DeleteResponse")]
-        void Delete(WcfClient.ServiceReference1.User user);
+        void Delete(WcfClient.ServiceReference.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUSContract/Delete", ReplyAction="http://tempuri.org/IUSContract/DeleteResponse")]
-        System.Threading.Tasks.Task DeleteAsync(WcfClient.ServiceReference1.User user);
+        System.Threading.Tasks.Task DeleteAsync(WcfClient.ServiceReference.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUSContract/FindByTag", ReplyAction="http://tempuri.org/IUSContract/FindByTagResponse")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(WcfClient.ServiceReference1.GenderFemCriteria))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(WcfClient.ServiceReference.Gender))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(WcfClient.ServiceReference.VisaRecord[]))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(WcfClient.ServiceReference.VisaRecord))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(int[]))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(WcfClient.ServiceReference1.Gender))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(WcfClient.ServiceReference1.VisaRecord[]))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(WcfClient.ServiceReference1.VisaRecord))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(WcfClient.ServiceReference1.User))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(WcfClient.ServiceReference.GenderFemCriteria))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(WcfClient.ServiceReference.User))]
         int[] FindByTag(object[] criteria);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUSContract/FindByTag", ReplyAction="http://tempuri.org/IUSContract/FindByTagResponse")]
@@ -288,12 +288,12 @@ namespace WcfClient.ServiceReference1 {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IUSContractChannel : WcfClient.ServiceReference1.IUSContract, System.ServiceModel.IClientChannel {
+    public interface IUSContractChannel : WcfClient.ServiceReference.IUSContract, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class USContractClient : System.ServiceModel.ClientBase<WcfClient.ServiceReference1.IUSContract>, WcfClient.ServiceReference1.IUSContract {
+    public partial class USContractClient : System.ServiceModel.ClientBase<WcfClient.ServiceReference.IUSContract>, WcfClient.ServiceReference.IUSContract {
         
         public USContractClient() {
         }
@@ -314,19 +314,19 @@ namespace WcfClient.ServiceReference1 {
                 base(binding, remoteAddress) {
         }
         
-        public int Add(WcfClient.ServiceReference1.User user) {
+        public int Add(WcfClient.ServiceReference.User user) {
             return base.Channel.Add(user);
         }
         
-        public System.Threading.Tasks.Task<int> AddAsync(WcfClient.ServiceReference1.User user) {
+        public System.Threading.Tasks.Task<int> AddAsync(WcfClient.ServiceReference.User user) {
             return base.Channel.AddAsync(user);
         }
         
-        public void Delete(WcfClient.ServiceReference1.User user) {
+        public void Delete(WcfClient.ServiceReference.User user) {
             base.Channel.Delete(user);
         }
         
-        public System.Threading.Tasks.Task DeleteAsync(WcfClient.ServiceReference1.User user) {
+        public System.Threading.Tasks.Task DeleteAsync(WcfClient.ServiceReference.User user) {
             return base.Channel.DeleteAsync(user);
         }
         

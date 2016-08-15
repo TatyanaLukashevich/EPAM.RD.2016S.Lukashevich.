@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.3.7\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -58,80 +62,92 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Service References\ServiceReference3\Reference.cs">
+    <Compile Include="Service References\ServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="Service References\ServiceReference1\master.xsd">
+    <None Include="Service References\ServiceReference2\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ServiceReference2\configuration.svcinfo" />
+    <None Include="Service References\ServiceReference2\configuration91.svcinfo" />
+    <None Include="Service References\ServiceReference2\slave_2.disco" />
+    <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ServiceReference1\master1.xsd">
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ServiceReference1\master2.xsd">
+    <None Include="packages.config" />
+    <None Include="Service References\ServiceReference1\SlaveService.wsdl" />
+    <None Include="Service References\ServiceReference1\slave_1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ServiceReference1\master3.xsd">
+    <None Include="Service References\ServiceReference1\slave_11.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ServiceReference1\master4.xsd">
+    <None Include="Service References\ServiceReference1\slave_12.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ServiceReference1\master5.xsd">
+    <None Include="Service References\ServiceReference1\slave_13.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ServiceReference1\MasterService.wsdl" />
+    <None Include="Service References\ServiceReference1\slave_14.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference1\slave_15.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\ServiceReference2\SlaveService.wsdl" />
-    <None Include="Service References\ServiceReference2\slave_1.xsd">
+    <None Include="Service References\ServiceReference2\slave_2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ServiceReference2\slave_11.xsd">
+    <None Include="Service References\ServiceReference2\slave_21.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ServiceReference2\slave_12.xsd">
+    <None Include="Service References\ServiceReference2\slave_22.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ServiceReference2\slave_13.xsd">
+    <None Include="Service References\ServiceReference2\slave_23.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ServiceReference2\slave_14.xsd">
+    <None Include="Service References\ServiceReference2\slave_24.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ServiceReference2\slave_15.xsd">
+    <None Include="Service References\ServiceReference2\slave_25.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ServiceReference3\SlaveService.wsdl" />
-    <None Include="Service References\ServiceReference3\slave_2.xsd">
+    <None Include="Service References\ServiceReference\master.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ServiceReference3\slave_21.xsd">
+    <None Include="Service References\ServiceReference\master1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ServiceReference3\slave_22.xsd">
+    <None Include="Service References\ServiceReference\master2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ServiceReference3\slave_23.xsd">
+    <None Include="Service References\ServiceReference\master3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ServiceReference3\slave_24.xsd">
+    <None Include="Service References\ServiceReference\master4.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ServiceReference3\slave_25.xsd">
+    <None Include="Service References\ServiceReference\master5.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\ServiceReference\MasterService.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConfigLayer\ConfigLayer.csproj">
       <Project>{3e32b74c-10b4-4fcf-9b01-380d8ef6c87b}</Project>
       <Name>ConfigLayer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\UserStorage\UserStorage.csproj">
-      <Project>{7f1e9001-96d0-43bb-9b75-53478e795e07}</Project>
-      <Name>UserStorage</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -140,10 +156,25 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ServiceReference1\" />
     <WCFMetadataStorage Include="Service References\ServiceReference2\" />
-    <WCFMetadataStorage Include="Service References\ServiceReference3\" />
+    <WCFMetadataStorage Include="Service References\ServiceReference\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\ServiceReference1\master.disco" />
+    <None Include="Service References\ServiceReference\master.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServiceReference1\slave_1.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\ServiceReference1\configuration91.svcinfo" />
@@ -153,36 +184,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\ServiceReference1\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceReference2\slave_1.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceReference2\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceReference2\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceReference2\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceReference3\slave_2.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceReference3\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceReference3\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceReference3\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

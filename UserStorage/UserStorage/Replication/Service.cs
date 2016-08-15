@@ -6,6 +6,8 @@ using UserStorage;
 using UserStorage.NetworkCommunication;
 using UserStorage.Replication;
 using System.ServiceModel;
+using UserStorage.SearchCriteria;
+using System.Linq;
 
 namespace Replication
 {
@@ -33,7 +35,7 @@ namespace Replication
             Repo = repo;
         }
 
-        public virtual void Add(User user)
+        public virtual int Add(User user)
         {
             locker.EnterWriteLock();
             try
@@ -44,7 +46,7 @@ namespace Replication
                 }
 
                NotifyAdd(user);
-                
+              return Repo.Add(user);
             }
             finally
             {
@@ -85,6 +87,11 @@ namespace Replication
             }
 
             return listId;
+        }
+
+        public List<int> FindByTag(ICriteria<User>[] criteries)
+        {
+            throw new NotImplementedException();
         }
 
         public virtual void WriteToXML()

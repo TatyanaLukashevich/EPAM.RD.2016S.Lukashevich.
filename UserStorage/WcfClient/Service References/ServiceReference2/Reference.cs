@@ -9,29 +9,270 @@
 //------------------------------------------------------------------------------
 
 namespace WcfClient.ServiceReference2 {
+    using System.Runtime.Serialization;
+    using System;
     
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/UserStorage")]
+    [System.SerializableAttribute()]
+    public partial class User : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private System.DateTime DateOfBirthk__BackingFieldField;
+        
+        private int IDk__BackingFieldField;
+        
+        private string LastNamek__BackingFieldField;
+        
+        private string Namek__BackingFieldField;
+        
+        private WcfClient.ServiceReference2.Gender UserGenderk__BackingFieldField;
+        
+        private WcfClient.ServiceReference2.VisaRecord[] VisaRecordsk__BackingFieldField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<DateOfBirth>k__BackingField", IsRequired=true)]
+        public System.DateTime DateOfBirthk__BackingField {
+            get {
+                return this.DateOfBirthk__BackingFieldField;
+            }
+            set {
+                if ((this.DateOfBirthk__BackingFieldField.Equals(value) != true)) {
+                    this.DateOfBirthk__BackingFieldField = value;
+                    this.RaisePropertyChanged("DateOfBirthk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<ID>k__BackingField", IsRequired=true)]
+        public int IDk__BackingField {
+            get {
+                return this.IDk__BackingFieldField;
+            }
+            set {
+                if ((this.IDk__BackingFieldField.Equals(value) != true)) {
+                    this.IDk__BackingFieldField = value;
+                    this.RaisePropertyChanged("IDk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<LastName>k__BackingField", IsRequired=true)]
+        public string LastNamek__BackingField {
+            get {
+                return this.LastNamek__BackingFieldField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastNamek__BackingFieldField, value) != true)) {
+                    this.LastNamek__BackingFieldField = value;
+                    this.RaisePropertyChanged("LastNamek__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<Name>k__BackingField", IsRequired=true)]
+        public string Namek__BackingField {
+            get {
+                return this.Namek__BackingFieldField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Namek__BackingFieldField, value) != true)) {
+                    this.Namek__BackingFieldField = value;
+                    this.RaisePropertyChanged("Namek__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<UserGender>k__BackingField", IsRequired=true)]
+        public WcfClient.ServiceReference2.Gender UserGenderk__BackingField {
+            get {
+                return this.UserGenderk__BackingFieldField;
+            }
+            set {
+                if ((this.UserGenderk__BackingFieldField.Equals(value) != true)) {
+                    this.UserGenderk__BackingFieldField = value;
+                    this.RaisePropertyChanged("UserGenderk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<VisaRecords>k__BackingField", IsRequired=true)]
+        public WcfClient.ServiceReference2.VisaRecord[] VisaRecordsk__BackingField {
+            get {
+                return this.VisaRecordsk__BackingFieldField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VisaRecordsk__BackingFieldField, value) != true)) {
+                    this.VisaRecordsk__BackingFieldField = value;
+                    this.RaisePropertyChanged("VisaRecordsk__BackingField");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Gender", Namespace="http://schemas.datacontract.org/2004/07/UserStorage.Entities")]
+    public enum Gender : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Female = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Male = 1,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="VisaRecord", Namespace="http://schemas.datacontract.org/2004/07/UserStorage.Entities")]
+    [System.SerializableAttribute()]
+    public partial struct VisaRecord : System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private string Countryk__BackingFieldField;
+        
+        private System.DateTime VisaEndk__BackingFieldField;
+        
+        private System.DateTime VisaStartk__BackingFieldField;
+        
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<Country>k__BackingField", IsRequired=true)]
+        public string Countryk__BackingField {
+            get {
+                return this.Countryk__BackingFieldField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Countryk__BackingFieldField, value) != true)) {
+                    this.Countryk__BackingFieldField = value;
+                    this.RaisePropertyChanged("Countryk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<VisaEnd>k__BackingField", IsRequired=true)]
+        public System.DateTime VisaEndk__BackingField {
+            get {
+                return this.VisaEndk__BackingFieldField;
+            }
+            set {
+                if ((this.VisaEndk__BackingFieldField.Equals(value) != true)) {
+                    this.VisaEndk__BackingFieldField = value;
+                    this.RaisePropertyChanged("VisaEndk__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<VisaStart>k__BackingField", IsRequired=true)]
+        public System.DateTime VisaStartk__BackingField {
+            get {
+                return this.VisaStartk__BackingFieldField;
+            }
+            set {
+                if ((this.VisaStartk__BackingFieldField.Equals(value) != true)) {
+                    this.VisaStartk__BackingFieldField = value;
+                    this.RaisePropertyChanged("VisaStartk__BackingField");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GenderFemCriteria", Namespace="http://schemas.datacontract.org/2004/07/UserStorage.SearchCriteria")]
+    [System.SerializableAttribute()]
+    public partial class GenderFemCriteria : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference2.IUSContract")]
     public interface IUSContract {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUSContract/Add", ReplyAction="http://tempuri.org/IUSContract/AddResponse")]
-        void Add(UserStorage.User user);
+        int Add(WcfClient.ServiceReference2.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUSContract/Add", ReplyAction="http://tempuri.org/IUSContract/AddResponse")]
-        System.Threading.Tasks.Task AddAsync(UserStorage.User user);
+        System.Threading.Tasks.Task<int> AddAsync(WcfClient.ServiceReference2.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUSContract/Delete", ReplyAction="http://tempuri.org/IUSContract/DeleteResponse")]
-        void Delete(UserStorage.User user);
+        void Delete(WcfClient.ServiceReference2.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUSContract/Delete", ReplyAction="http://tempuri.org/IUSContract/DeleteResponse")]
-        System.Threading.Tasks.Task DeleteAsync(UserStorage.User user);
+        System.Threading.Tasks.Task DeleteAsync(WcfClient.ServiceReference2.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUSContract/FindByTag", ReplyAction="http://tempuri.org/IUSContract/FindByTagResponse")]
-        int[] FindByTag(System.Func<UserStorage.User, bool> criteria);
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(WcfClient.ServiceReference2.Gender))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(WcfClient.ServiceReference2.VisaRecord[]))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(WcfClient.ServiceReference2.VisaRecord))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(int[]))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(WcfClient.ServiceReference2.GenderFemCriteria))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(WcfClient.ServiceReference2.User))]
+        int[] FindByTag(object[] criteria);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUSContract/FindByTag", ReplyAction="http://tempuri.org/IUSContract/FindByTagResponse")]
-        System.Threading.Tasks.Task<int[]> FindByTagAsync(System.Func<UserStorage.User, bool> criteria);
+        System.Threading.Tasks.Task<int[]> FindByTagAsync(object[] criteria);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUSContract/WriteToXML", ReplyAction="http://tempuri.org/IUSContract/WriteToXMLResponse")]
         void WriteToXML();
@@ -73,27 +314,27 @@ namespace WcfClient.ServiceReference2 {
                 base(binding, remoteAddress) {
         }
         
-        public void Add(UserStorage.User user) {
-            base.Channel.Add(user);
+        public int Add(WcfClient.ServiceReference2.User user) {
+            return base.Channel.Add(user);
         }
         
-        public System.Threading.Tasks.Task AddAsync(UserStorage.User user) {
+        public System.Threading.Tasks.Task<int> AddAsync(WcfClient.ServiceReference2.User user) {
             return base.Channel.AddAsync(user);
         }
         
-        public void Delete(UserStorage.User user) {
+        public void Delete(WcfClient.ServiceReference2.User user) {
             base.Channel.Delete(user);
         }
         
-        public System.Threading.Tasks.Task DeleteAsync(UserStorage.User user) {
+        public System.Threading.Tasks.Task DeleteAsync(WcfClient.ServiceReference2.User user) {
             return base.Channel.DeleteAsync(user);
         }
         
-        public int[] FindByTag(System.Func<UserStorage.User, bool> criteria) {
+        public int[] FindByTag(object[] criteria) {
             return base.Channel.FindByTag(criteria);
         }
         
-        public System.Threading.Tasks.Task<int[]> FindByTagAsync(System.Func<UserStorage.User, bool> criteria) {
+        public System.Threading.Tasks.Task<int[]> FindByTagAsync(object[] criteria) {
             return base.Channel.FindByTagAsync(criteria);
         }
         

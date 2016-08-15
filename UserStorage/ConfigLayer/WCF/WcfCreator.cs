@@ -11,7 +11,7 @@ namespace ConfigLayer.WCF
         public static ServiceHost CreateWcf(Service service)
         {
             string localAddress = GetLocalIpAddress();
-            Uri serviceUri = new Uri($"http://{localAddress}:8080/Service/" + service.Name);
+            Uri serviceUri = new Uri($"http://127.0.0.1:8080/Service/" + service.Name);
             ServiceHost host = new ServiceHost(service, serviceUri);
             host.Open();
 

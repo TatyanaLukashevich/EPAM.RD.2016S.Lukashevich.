@@ -16,15 +16,12 @@ namespace UserStorageConsole
     {
         static void Main(string[] args)
         {
-            string localAddress = GetLocalIpAddress();
             var services = SystemCreater.CreateSystem();
             MasterService master = (MasterService)SystemCreater.Master;
-            string a = $"http://{localAddress}:8080/Service/" + master.Name;
-            Console.WriteLine(a);
              var slaves = SystemCreater.Services.Where(s => s is SlaveService).Select(s => (SlaveService)s);
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 2; i++)
             {
-                var user = new User("Lily" + i, "Pad" + i, new DateTime(1960, 7, 20, 18, 30, 25), Gender.Female);
+                var user = new User("Lily" + i, "Pad" + i, new DateTime(1990, 7, 20, 18, 30, 25), Gender.Female);
                
                 master = (MasterService)SystemCreater.Master;
                 master.Communicator = SystemCreater.MasterCommunicator;
@@ -57,18 +54,7 @@ namespace UserStorageConsole
 
             //master.WriteToXML();
         }
-        private static string GetLocalIpAddress()
-        {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (var ip in host.AddressList)
-            {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    return ip.ToString();
-                }
-            }
-            throw new Exception("Local IP Address Not Found!");
-        }
+     
         private static void RunMaster(MasterService master)
         {
             Random rand = new Random();

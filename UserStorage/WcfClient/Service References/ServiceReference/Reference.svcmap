@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="0762eaa4-c948-4006-b146-e55c6980eafc" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://127.0.0.1:8080/Service/master" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="master.xsd" MetadataType="Schema" ID="88775d82-3067-417f-aaad-b3f0d93bda51" SourceId="1" SourceUrl="http://127.0.0.1:8080/Service/master?xsd=xsd4" />
+    <MetadataFile FileName="master1.xsd" MetadataType="Schema" ID="b19cfb73-bf5a-4a75-a1b5-e205e6967ff9" SourceId="1" SourceUrl="http://127.0.0.1:8080/Service/master?xsd=xsd5" />
+    <MetadataFile FileName="MasterService.wsdl" MetadataType="Wsdl" ID="cfa66323-a906-4781-8ba0-e0aa30c92648" SourceId="1" SourceUrl="http://127.0.0.1:8080/Service/master?wsdl" />
+    <MetadataFile FileName="master.disco" MetadataType="Disco" ID="7826d8e3-36fd-4525-8b52-335a1c1e38fa" SourceId="1" SourceUrl="http://127.0.0.1:8080/Service/master?disco" />
+    <MetadataFile FileName="master2.xsd" MetadataType="Schema" ID="2049b724-8a59-4428-b310-8e67ed1a871d" SourceId="1" SourceUrl="http://127.0.0.1:8080/Service/master?xsd=xsd1" />
+    <MetadataFile FileName="master3.xsd" MetadataType="Schema" ID="f67a65ac-e27c-43a3-adf1-2d5970bc7228" SourceId="1" SourceUrl="http://127.0.0.1:8080/Service/master?xsd=xsd2" />
+    <MetadataFile FileName="master4.xsd" MetadataType="Schema" ID="1852c989-fbc9-4242-9c18-3038d0c434a8" SourceId="1" SourceUrl="http://127.0.0.1:8080/Service/master?xsd=xsd3" />
+    <MetadataFile FileName="master5.xsd" MetadataType="Schema" ID="7c3eb70a-3c70-4dc1-90a4-b0b99d2fca5b" SourceId="1" SourceUrl="http://127.0.0.1:8080/Service/master?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -22,7 +22,7 @@ namespace Replication
         #endregion
 
         #region Public metods
-        public override void Add(User user)
+        public override int Add(User user)
         {
             throw new InvalidOperationException();
         }
@@ -71,6 +71,7 @@ namespace Replication
             {
                 Repo.Add(args.ChangedUser);
                 Logger.Info("Collection of users for slave was updated. Added new user.");
+                Console.WriteLine("Collection of users for slave was updated. Added new user.");
             }
             finally
             {
@@ -85,9 +86,10 @@ namespace Replication
             {
                 Repo.Delete(args.ChangedUser);
                 Logger.Info("Collection of users for slave was updated. User was deleted.");
+                Console.WriteLine("Collection of users for slave was updated. User was deleted.");
             }
             finally
-            {
+            {     
                 locker.ExitWriteLock();
             }
         }

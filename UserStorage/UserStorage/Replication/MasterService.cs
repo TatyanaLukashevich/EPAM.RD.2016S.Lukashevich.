@@ -28,9 +28,9 @@ namespace Replication
             Logger.Info("Master Repository have been registered");
         }
 
-        public override void Add(User user)
+        public override int Add(User user)
         {
-            base.Add(user);
+           return base.Add(user);
         }
 
         public override void Delete(User user)

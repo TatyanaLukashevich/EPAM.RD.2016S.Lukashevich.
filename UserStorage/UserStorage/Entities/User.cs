@@ -2,11 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
 using UserStorage.Entities;
 
 namespace UserStorage
@@ -19,6 +14,16 @@ namespace UserStorage
         {
             VisaRecords = new List<VisaRecord>();
         }
+
+        public User(string name, string lastname, DateTime dateOfBirth, Gender gender, List<VisaRecord> visaRecords = null)
+        {
+            Name = name;
+            LastName = lastname;
+            DateOfBirth = dateOfBirth;
+            UserGender = gender;
+            VisaRecords = visaRecords;
+        }
+        #endregion
 
         #region auto-properties
         public int ID { get; set; }
@@ -34,15 +39,6 @@ namespace UserStorage
         public List<VisaRecord> VisaRecords { get; set; }
         #endregion
 
-        public User(string name, string lastname, DateTime dateOfBirth, Gender gender, List<VisaRecord> visaRecords = null)
-        {
-            Name = name;
-            LastName = lastname;
-            DateOfBirth = dateOfBirth;
-            UserGender = gender;
-            VisaRecords = visaRecords;
-        }
-        #endregion
 
         #region override methods
         public override bool Equals(object obj)
