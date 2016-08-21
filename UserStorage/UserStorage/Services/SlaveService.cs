@@ -11,8 +11,6 @@ namespace Replication
     {
         #region Private Fields
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
-        public AppDomain SlaveDomain { get; private set; }
         #endregion
 
         #region Constructors

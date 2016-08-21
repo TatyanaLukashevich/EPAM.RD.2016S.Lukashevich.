@@ -8,6 +8,7 @@ namespace ConfigLayer.AppDomainConfig
     public class DomainLoader : MarshalByRefObject
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         public Service CreateInstance(string type)
         {
             UserRepository repo = new UserRepository();

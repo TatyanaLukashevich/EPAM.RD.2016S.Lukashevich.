@@ -1,7 +1,7 @@
-﻿using NLog;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ServiceModel;
+using NLog;
 using WcfClient.ServiceReference;
 
 namespace WcfClient
@@ -9,6 +9,7 @@ namespace WcfClient
     class Program
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         static void Main(string[] args)
         {
             try
@@ -25,18 +26,14 @@ namespace WcfClient
                 USContractClient client = new USContractClient();
                 client.Open();
                 user.IDk__BackingField = client.Add(user);
-                //client.Delete(user);
                 client.WriteToXML();
                 int[] ids = client.FindByTag(new[] { new GenderMaleCriteria() });
-
             }
-
             catch (FaultException excp)
             {
                 Console.WriteLine(excp.Message);
                 Logger.Trace(excp.Message);
             }
         }
-
     }
 }

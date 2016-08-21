@@ -1,6 +1,6 @@
-﻿using Replication;
-using System;
+﻿using System;
 using System.ServiceModel;
+using Replication;
 
 namespace ConfigLayer.WCF
 {

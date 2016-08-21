@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Threading;
 using ConfigLayer.AppDomainConfig;
+using ConfigLayer.WCF;
 using Replication;
 using UserStorage;
 using UserStorage.Entities;
-using ConfigLayer.WCF;
 
 namespace UserStorageConsole
 {
@@ -29,8 +29,10 @@ namespace UserStorageConsole
                 {
                     Console.WriteLine(item.Repo.UserCollection.Count);
                 }
+
                 Thread.Sleep(100);
             }
+
             foreach (var userService in services)
             {
                 WcfCreator.CreateWcf(userService);

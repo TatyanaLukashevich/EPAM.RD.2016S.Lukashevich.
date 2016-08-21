@@ -4,7 +4,6 @@ using UserStorage.SearchCriteria;
 
 namespace UserStorage.Interface
 {
-
     [ServiceContract]
     [ServiceKnownType(typeof(GenderFemCriteria))]
     [ServiceKnownType(typeof(GenderMaleCriteria))]
@@ -23,8 +22,6 @@ namespace UserStorage.Interface
         void WriteToXML();
 
         [OperationContract]
-        void ReadFromXML();
-
-       
+        void ReadFromXML(); 
     }
 }

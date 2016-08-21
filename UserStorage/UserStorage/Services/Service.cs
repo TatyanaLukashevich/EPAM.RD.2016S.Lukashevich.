@@ -1,31 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.ServiceModel;
 using System.Threading;
 using NLog;
 using UserStorage;
+using UserStorage.Interface;
 using UserStorage.NetworkCommunication;
 using UserStorage.Replication;
-using System.ServiceModel;
-using System.Linq;
-using UserStorage.Interface;
 
 namespace Replication
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, AddressFilterMode = AddressFilterMode.Any)]
     public abstract class Service : MarshalByRefObject, IUSContract
     {
-        public Communicator Communicator { get; set; }
-
-        public string Name { get; set; }
+        #region Fields
+        protected bool loggingEnabled = true;
 
         protected ReaderWriterLockSlim locker = new ReaderWriterLockSlim();
 
-        protected bool loggingEnabled = true;
-
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        #endregion
 
-        public UserRepository Repo { get; set; }
-
+        #region Constructors
         public Service()
         {
         }
@@ -34,7 +31,17 @@ namespace Replication
         {
             Repo = repo;
         }
+        #endregion
 
+        #region Autoproperties
+        public Communicator Communicator { get; set; }
+
+        public string Name { get; set; }
+
+        public UserRepository Repo { get; set; }
+        #endregion
+
+        #region Public methods
         public virtual int Add(User user)
         {
             locker.EnterWriteLock();
@@ -109,8 +116,7 @@ namespace Replication
 
         public virtual void ReadFromXML()
         {
-           var users =  Repo.ReadFromXML();
-                
+           var users = Repo.ReadFromXML();
         }
 
         public virtual void AddCommunicator(Communicator communicator)
@@ -122,11 +128,12 @@ namespace Replication
                
             Communicator = communicator;
         }
+        #endregion
 
+        #region Protected methods
         protected abstract void NotifyAdd(User user);
 
         protected abstract void NotifyDelete(User user);
-
 
         protected virtual void OnUserDeleted(object sender, ChangedUserEventArgs args)
         {
@@ -136,6 +143,7 @@ namespace Replication
         protected virtual void OnUserAdded(object sender, ChangedUserEventArgs args)
         {
             Communicator?.SendAdd(args);
-        } 
+        }
+        #endregion
     }
 }

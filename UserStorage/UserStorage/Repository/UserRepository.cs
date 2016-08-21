@@ -18,6 +18,13 @@ namespace UserStorage
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         #endregion
 
+        #region Constructors
+        public UserRepository()
+        {
+            Initialize(new GeneratorId());
+        }
+        #endregion
+
         #region Autoproperties
         public static BooleanSwitch DataSwitch { get; private set; }
 
@@ -26,13 +33,6 @@ namespace UserStorage
         public MasterService Service { get; private set; }
 
         public GeneratorId Generator { get; set; }
-        #endregion
-
-        #region Constructors
-        public UserRepository()
-        {
-            Initialize(new GeneratorId());
-        }
         #endregion
 
         #region Public methods
@@ -44,7 +44,6 @@ namespace UserStorage
             {
                 throw new ArgumentException("user is too young");
             }
-
             else
             {
                 this.GenerateId(user);

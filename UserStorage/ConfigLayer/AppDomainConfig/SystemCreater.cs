@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Reflection;
 using System.Net;
+using System.Reflection;
 using System.Threading.Tasks;
 using ConfigLayer.CustomSectionConfig;
 using NLog;
@@ -16,6 +16,7 @@ namespace ConfigLayer.AppDomainConfig
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         
         public static List<Service> Services { get; set; }
+
         public static Service Master { get; set; }
 
         public static List<Service> Slaves { get; private set; }
@@ -76,5 +77,3 @@ namespace ConfigLayer.AppDomainConfig
         }
     }
 }
-
-

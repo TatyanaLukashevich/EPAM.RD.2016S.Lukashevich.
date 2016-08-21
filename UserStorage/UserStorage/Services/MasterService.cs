@@ -11,9 +11,6 @@ namespace Replication
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private static MasterService instance;
-
-        public static MasterService GetInstance => instance ?? (instance = new MasterService(new UserRepository()));
-
         #endregion
 
         #region Constructors
@@ -21,6 +18,8 @@ namespace Replication
         {
         }
         #endregion
+
+        public static MasterService GetInstance => instance ?? (instance = new MasterService(new UserRepository()));
 
         #region Public methods
         public void RegisterRepository()

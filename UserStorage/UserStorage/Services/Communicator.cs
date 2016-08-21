@@ -78,6 +78,7 @@ namespace UserStorage.NetworkCommunication
                 MethodType = MethodType.Add
             });
         }
+
         public void SendDelete(ChangedUserEventArgs args)
         {
             if (sender == null)
@@ -102,7 +103,11 @@ namespace UserStorage.NetworkCommunication
         {
             while (true)
             {
-                if (tokenSource.IsCancellationRequested) return;
+                if (tokenSource.IsCancellationRequested)
+                {
+                    return;
+                }
+
                 var message = receiver.Receive();
                 if (message == null)
                 {

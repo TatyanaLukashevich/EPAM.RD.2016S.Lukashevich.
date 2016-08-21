@@ -10,14 +10,15 @@ namespace UserStorage.NetworkCommunication
     [Serializable]
     public class Receiver : IDisposable
     {
+        #region Fields
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private Socket listener;
 
         private Socket handler;
+        #endregion
 
-        public IPEndPoint IpEndPoint { get; set; }
-
+        #region Constructor
         public Receiver(IPAddress ipAddress, int port)
         {
             IpEndPoint = new IPEndPoint(ipAddress, port);
@@ -25,7 +26,13 @@ namespace UserStorage.NetworkCommunication
             listener.Bind(IpEndPoint);
             listener.Listen(1);
         }
+        #endregion
 
+        #region Autoproperties
+        public IPEndPoint IpEndPoint { get; set; }
+        #endregion
+
+        #region Public methods
         public Task AcceptConnection()
         {
             return Task.Run(() =>
@@ -44,6 +51,7 @@ namespace UserStorage.NetworkCommunication
             {
                 return null;
             }
+
             using (var networkStream = new NetworkStream(handler, false))
             {
                 message = (Message)formatter.Deserialize(networkStream);
@@ -58,6 +66,6 @@ namespace UserStorage.NetworkCommunication
             listener.Close();
             handler.Close();
         }
-
+        #endregion
     }
 }
