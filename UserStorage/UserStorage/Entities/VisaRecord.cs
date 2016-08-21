@@ -2,6 +2,9 @@
 
 namespace UserStorage.Entities
 {
+    /// <summary>
+    /// Struct of records of visa
+    /// </summary>
     [Serializable]
     public struct VisaRecord 
     {

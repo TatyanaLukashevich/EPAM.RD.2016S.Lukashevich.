@@ -4,6 +4,9 @@ using UserStorage.SearchCriteria;
 
 namespace UserStorage.Interface
 {
+    /// <summary>
+    /// Contract-interface for WCF
+    /// </summary>
     [ServiceContract]
     [ServiceKnownType(typeof(GenderFemCriteria))]
     [ServiceKnownType(typeof(GenderMaleCriteria))]

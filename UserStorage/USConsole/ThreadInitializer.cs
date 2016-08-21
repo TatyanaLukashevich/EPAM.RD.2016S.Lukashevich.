@@ -6,8 +6,16 @@ using UserStorage;
 
 namespace USConsole
 {
+    /// <summary>
+    /// Class-helper for initialize master/ slaves in separdtes threads
+    /// </summary>
   public static class ThreadInitializer
     {
+        /// <summary>
+        /// Initialize master and slaves threads
+        /// </summary>
+        /// <param name="master"></param>
+        /// <param name="slaves"></param>
         public static void ThreadInitialize(MasterService master, IEnumerable<SlaveService> slaves)
         {
             RunSlaves(slaves);
@@ -24,6 +32,10 @@ namespace USConsole
             master.WriteToXML();
         }
 
+        /// <summary>
+        /// Run master threads for add/delete and search operations
+        /// </summary>
+        /// <param name="master"></param>
         private static void RunMaster(MasterService master)
         {
             Random rand = new Random();
@@ -88,6 +100,10 @@ namespace USConsole
             masterSearchThread.Start();
         }
 
+        /// <summary>
+        /// Run slaves threads for search operation
+        /// </summary>
+        /// <param name="slaves"></param>
         private static void RunSlaves(IEnumerable<SlaveService> slaves)
         {
             Random rand = new Random();

@@ -11,10 +11,16 @@ using UserStorage.NetworkCommunication;
 
 namespace ConfigLayer.AppDomainConfig
 {
+    /// <summary>
+    /// Utility class for creating replication system (master/ slaves) in separate domains and securing settings for communication via network
+    /// </summary>
     public static class SystemCreater
     {
+        #region Fields
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        
+        #endregion
+
+        #region Autoproperties
         public static List<Service> Services { get; set; }
 
         public static Service Master { get; set; }
@@ -22,7 +28,12 @@ namespace ConfigLayer.AppDomainConfig
         public static List<Service> Slaves { get; private set; }
 
         public static Communicator MasterCommunicator { get; set; }
+        #endregion
 
+        /// <summary>
+        /// Create replication system
+        /// </summary>
+        /// <returns>Returns enumeration of all created services(master and slaves)</returns>
         public static IEnumerable<Service> CreateSystem()
         {
             Services = new List<Service>();

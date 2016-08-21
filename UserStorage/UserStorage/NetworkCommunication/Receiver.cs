@@ -7,6 +7,9 @@ using NLog;
 
 namespace UserStorage.NetworkCommunication
 {
+    /// <summary>
+    /// Receiver class
+    /// </summary>
     [Serializable]
     public class Receiver : IDisposable
     {
@@ -33,6 +36,10 @@ namespace UserStorage.NetworkCommunication
         #endregion
 
         #region Public methods
+        /// <summary>
+        /// Accept connection
+        /// </summary>
+        /// <returns></returns>
         public Task AcceptConnection()
         {
             return Task.Run(() =>
@@ -43,6 +50,10 @@ namespace UserStorage.NetworkCommunication
             });
         }
 
+        /// <summary>
+        /// Receive message
+        /// </summary>
+        /// <returns></returns>
         public Message Receive()
         {
             BinaryFormatter formatter = new BinaryFormatter();
@@ -61,6 +72,9 @@ namespace UserStorage.NetworkCommunication
             return message;
         }
 
+        /// <summary>
+        /// Close sockets
+        /// </summary>
         public void Dispose()
         {
             listener.Close();

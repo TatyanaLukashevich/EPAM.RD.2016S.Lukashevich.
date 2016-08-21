@@ -7,6 +7,9 @@ using NLog;
 
 namespace UserStorage.NetworkCommunication
 {
+    /// <summary>
+    /// Sender class
+    /// </summary>
     [Serializable]
     public class Sender : IDisposable
     {
@@ -14,6 +17,10 @@ namespace UserStorage.NetworkCommunication
 
         private List<Socket> sockets = new List<Socket>();
 
+        /// <summary>
+        /// Connect to listeners
+        /// </summary>
+        /// <param name="ipEndPoints"></param>
         public void Connect(IEnumerable<IPEndPoint> ipEndPoints)
         {
             foreach (var ipEndPoint in ipEndPoints)
@@ -24,6 +31,11 @@ namespace UserStorage.NetworkCommunication
             }
         }
 
+
+        /// <summary>
+        /// Send message
+        /// </summary>
+        /// <param name="message"></param>
         public void Send(Message message)
         {
             BinaryFormatter formatter = new BinaryFormatter();
@@ -38,6 +50,9 @@ namespace UserStorage.NetworkCommunication
             Logger.Info("Message send!");
         }
 
+        /// <summary>
+        /// Close sockets
+        /// </summary>
         public void Dispose()
         {
             foreach (var socket in sockets)

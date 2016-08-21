@@ -11,6 +11,9 @@ using UserStorage.Interface;
 
 namespace UserStorage
 {
+    /// <summary>
+    /// Memory repository
+    /// </summary>
     [Serializable]
     public class UserRepository : MarshalByRefObject, IUserRepository
     {
@@ -19,6 +22,9 @@ namespace UserStorage
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public UserRepository()
         {
             Initialize(new GeneratorId());
@@ -36,6 +42,11 @@ namespace UserStorage
         #endregion
 
         #region Public methods
+        /// <summary>
+        /// Add user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>User id</returns>
         public int Add(User user)
         {
             Logger.Trace("UserRepository.Add called");
@@ -53,6 +64,10 @@ namespace UserStorage
             return user.ID;
         }
 
+        /// <summary>
+        /// Delete user
+        /// </summary>
+        /// <param name="user"></param>
         public void Delete(User user)
         {
             Logger.Trace("UserRepository.Delete called");
@@ -67,18 +82,31 @@ namespace UserStorage
             }
         }
 
+        /// <summary>
+        /// Search user
+        /// </summary>
+        /// <param name="criteria">Delegate</param>
+        /// <returns>List user ids</returns>
         public List<int> FindByTag(Func<User, bool> criteria)
         {
             var required = UserCollection.Where(criteria).Select(u => u.ID).ToList();
                 return required;
         }
 
+        /// <summary>
+        /// Search user
+        /// </summary>
+        /// <param name="criteria">array of criteria</param>
+        /// <returns>List user ids</returns>
         public List<int> FindByTag(ICriteria<User>[] criteria)
         {
             return this.UserCollection.Where(u => criteria.All(cr => cr.IsMatch(u)))
                                     .Select(u => u.ID).ToList();
         }
 
+        /// <summary>
+        /// Write to xml
+        /// </summary>
         public void WriteToXML()
         {
             Logger.Trace("UserRepository.Save called");
@@ -92,6 +120,10 @@ namespace UserStorage
             Logger.Info("Collection of users was sucessfully serialized into xml file");
         }
 
+        /// <summary>
+        /// Read from xml
+        /// </summary>
+        /// <returns>List of users</returns>
         public List<User> ReadFromXML()
         {
             Logger.Trace("UserRepository.Load called");
@@ -108,6 +140,10 @@ namespace UserStorage
             return newUsers;
         }
 
+        /// <summary>
+        /// Get last serialized id
+        /// </summary>
+        /// <returns>Last serialized id</returns>
         public int GetLastId()
         {
             this.ReadFromXML();
@@ -117,7 +153,10 @@ namespace UserStorage
         #endregion
 
         #region Private Methods
-
+        /// <summary>
+        /// Initialize repository with generator id and collection of users
+        /// </summary>
+        /// <param name="generator"></param>
         private void Initialize(GeneratorId generator)
         {
             Generator = generator;

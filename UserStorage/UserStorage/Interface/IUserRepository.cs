@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace UserStorage.Interface
 {
+    /// <summary>
+    /// UserRepository interface
+    /// </summary>
     public interface IUserRepository
     {
         int Add(User user);

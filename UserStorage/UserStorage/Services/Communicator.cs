@@ -7,6 +7,9 @@ using UserStorage.Replication;
 
 namespace UserStorage.NetworkCommunication
 {
+    /// <summary>
+    /// Communicator bentween sender and receivers
+    /// </summary>
     [Serializable]
     public class Communicator : MarshalByRefObject
     {
@@ -36,6 +39,10 @@ namespace UserStorage.NetworkCommunication
 
         public event EventHandler<ChangedUserEventArgs> UserDeleted;
 
+        /// <summary>
+        /// Connect to listeners
+        /// </summary>
+        /// <param name="endPoints"></param>
         public void Connect(IEnumerable<IPEndPoint> endPoints)
         {
             if (sender == null)
@@ -46,6 +53,10 @@ namespace UserStorage.NetworkCommunication
             sender.Connect(endPoints);
         }
 
+
+        /// <summary>
+        /// Start message receiving
+        /// </summary>
         public void RunReceiver()
         {
             if (receiver == null)
@@ -57,6 +68,9 @@ namespace UserStorage.NetworkCommunication
             recieverTask = Task.Run((Action)Receive, tokenSource.Token);
         }
 
+        /// <summary>
+        /// Stop message receiving
+        /// </summary>
         public void StopReceiver()
         {
             if (tokenSource.Token.CanBeCanceled)
@@ -65,6 +79,10 @@ namespace UserStorage.NetworkCommunication
             }
         }
 
+        /// <summary>
+        /// Send message that user was added
+        /// </summary>
+        /// <param name="args"></param>
         public void SendAdd(ChangedUserEventArgs args)
         {
             if (sender == null)
@@ -79,6 +97,10 @@ namespace UserStorage.NetworkCommunication
             });
         }
 
+        /// <summary>
+        /// Send message that user was deleted
+        /// </summary>
+        /// <param name="args"></param>
         public void SendDelete(ChangedUserEventArgs args)
         {
             if (sender == null)
@@ -99,6 +121,9 @@ namespace UserStorage.NetworkCommunication
             sender?.Dispose();
         }
 
+        /// <summary>
+        /// Receive message
+        /// </summary>
         private void Receive()
         {
             while (true)
@@ -129,6 +154,11 @@ namespace UserStorage.NetworkCommunication
             }
         }
 
+
+        /// <summary>
+        /// Send message
+        /// </summary>
+        /// <param name="message"></param>
         private void Send(Message message)
         {
             sender.Send(message);

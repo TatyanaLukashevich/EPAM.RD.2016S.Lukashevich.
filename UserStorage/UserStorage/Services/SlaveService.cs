@@ -20,31 +20,46 @@ namespace Replication
         #endregion
 
         #region Public metods
+        /// <summary>
+        /// Slave can't add users
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public override int Add(User user)
         {
             throw new InvalidOperationException();
         }
 
+        /// <summary>
+        ///  Slave can't delete users
+        /// </summary>
+        /// <param name="user"></param>
         public override void Delete(User user)
         {
             throw new InvalidOperationException();
         }
 
+        /// <summary>
+        /// Slave can't write to xml
+        /// </summary>
         public override void WriteToXML()
         {
             throw new InvalidOperationException();
         }
 
+
+        /// <summary>
+        ///  Slave can't read from xml
+        /// </summary>
         public override void ReadFromXML()
         {
             throw new InvalidOperationException();
         }
 
-        public void RegisterRepository()
-        {
-            Logger.Info("Slave Repository have been registered");
-        }
-
+        /// <summary>
+        /// Communicator for slave
+        /// </summary>
+        /// <param name="communicator"></param>
         public override void AddCommunicator(Communicator communicator)
         {
             base.AddCommunicator(communicator);
@@ -54,7 +69,7 @@ namespace Replication
 
         protected override void NotifyAdd(User user)
         {
-            Task.Run(() => OnUserAdded(this, new ChangedUserEventArgs() { ChangedUser = user }));
+            throw new InvalidOperationException();
         }
 
         protected override void NotifyDelete(User user)
@@ -62,6 +77,11 @@ namespace Replication
             throw new InvalidOperationException();
         }
 
+        /// <summary>
+        /// Notify user added
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void OnAdded(object sender, ChangedUserEventArgs args)
         {
             locker.EnterWriteLock();
@@ -76,6 +96,11 @@ namespace Replication
             }
         }
 
+        /// <summary>
+        /// Notify user deleted
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void OnDeleted(object sender, ChangedUserEventArgs args)
         {
             locker.EnterWriteLock();

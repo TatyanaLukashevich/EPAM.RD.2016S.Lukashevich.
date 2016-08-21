@@ -2,8 +2,14 @@
 
 namespace ConfigLayer.CustomSectionConfigg
 {
+    /// <summary>
+    /// Bind us with information in Service section
+    /// </summary>
     public class ServiceElement : ConfigurationElement
     {
+        /// <summary>
+        /// Type of service
+        /// </summary>
         [ConfigurationProperty("serviceType", DefaultValue = "", IsKey = false, IsRequired = true)]
         public string ServiceType
         {
@@ -11,6 +17,9 @@ namespace ConfigLayer.CustomSectionConfigg
             set { base["serviceType"] = value; }
         }
 
+        /// <summary>
+        /// Path
+        /// </summary>
         [ConfigurationProperty("path", DefaultValue = "", IsKey = true, IsRequired = false)]
         public string Path
         {
@@ -18,6 +27,9 @@ namespace ConfigLayer.CustomSectionConfigg
             set { base["path"] = value; }
         }
 
+        /// <summary>
+        /// IP address for each instance of service
+        /// </summary>
         [ConfigurationProperty("ip", DefaultValue = "", IsKey = false, IsRequired = false)]
         public string IpAddress
         {
@@ -25,6 +37,9 @@ namespace ConfigLayer.CustomSectionConfigg
             set { base["ip"] = value; }
         }
 
+        /// <summary>
+        /// Service's port
+        /// </summary>
         [ConfigurationProperty("port", DefaultValue = "", IsKey = false, IsRequired = false)]
         public string Port
         {

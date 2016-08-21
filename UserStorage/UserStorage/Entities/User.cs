@@ -5,6 +5,9 @@ using UserStorage.Entities;
 
 namespace UserStorage
 {
+    /// <summary>
+    /// User
+    /// </summary>
     [Serializable]
     public class User 
     {
@@ -39,6 +42,11 @@ namespace UserStorage
         #endregion
 
         #region override methods
+        /// <summary>
+        /// Check whether users equal or not
+        /// </summary>
+        /// <param name="obj">User to compare</param>
+        /// <returns>true if users equal else - false</returns>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(obj, null))
@@ -55,6 +63,10 @@ namespace UserStorage
             return Equals(user);
         }
 
+        /// <summary>
+        /// Get hash code of user's instance
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
             checked
@@ -69,6 +81,11 @@ namespace UserStorage
             }
         }
 
+        /// <summary>
+        /// Instance method to check whether users equal
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public bool Equals(User user)
         {
             if (ReferenceEquals(user, null))
@@ -83,6 +100,10 @@ namespace UserStorage
                    VisaRecords.SequenceEqual(user.VisaRecords));
         }
 
+        /// <summary>
+        /// Get string representation of user
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             string userInfo = ID + " " + Name + " " + LastName + " " + DateOfBirth + " " + UserGender;
