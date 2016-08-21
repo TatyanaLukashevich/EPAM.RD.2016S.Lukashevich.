@@ -12,6 +12,7 @@ namespace UserStorage
         /// User was added
         /// </summary>
         Add,
+
         /// <summary>
         /// User was deleted
         /// </summary>

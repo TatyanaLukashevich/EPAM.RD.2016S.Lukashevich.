@@ -70,7 +70,10 @@ namespace UserStorage
         /// <param name="user"></param>
         public void Delete(User user)
         {
-            Logger.Trace("UserRepository.Delete called");
+            if (DataSwitch.Enabled)
+            {
+                Logger.Trace("UserRepository.Delete called");
+            }              
 
             if (!UserCollection.Contains(user))
             {
@@ -109,7 +112,11 @@ namespace UserStorage
         /// </summary>
         public void WriteToXML()
         {
-            Logger.Trace("UserRepository.Save called");
+            if (DataSwitch.Enabled)
+            {
+                Logger.Trace("UserRepository.Save called");
+            }
+               
             XmlSerializer formatter = new XmlSerializer(typeof(List<User>));
             string path = ConfigurationManager.AppSettings["xmlPath"];
             using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
@@ -117,7 +124,10 @@ namespace UserStorage
                 formatter.Serialize(fs, UserCollection);
             }
 
-            Logger.Info("Collection of users was sucessfully serialized into xml file");
+            if (DataSwitch.Enabled)
+            {
+                Logger.Info("Collection of users was sucessfully serialized into xml file");
+            }               
         }
 
         /// <summary>
@@ -136,7 +146,11 @@ namespace UserStorage
                 UserCollection = newUsers;
             }
 
-            Logger.Info("Collection of users was sucessfully deserialized from xml file");
+            if (DataSwitch.Enabled)
+            {
+                Logger.Info("Collection of users was sucessfully deserialized from xml file");
+            }
+
             return newUsers;
         }
 
@@ -147,7 +161,11 @@ namespace UserStorage
         public int GetLastId()
         {
             this.ReadFromXML();
-            Logger.Info("Iterator was restored");
+            if (DataSwitch.Enabled)
+            {
+                Logger.Info("Iterator was restored");
+            }
+                
             return UserCollection.LastOrDefault().ID;
         }
         #endregion
@@ -162,7 +180,10 @@ namespace UserStorage
             Generator = generator;
             UserCollection = new List<User>();
             DataSwitch = new BooleanSwitch("Data", "DataAccess module");
-            Logger.Info("UserRepository initialized");
+            if (DataSwitch.Enabled)
+            {
+                Logger.Info("UserRepository initialized");
+            }
         }
 
         private void GenerateId(User user)

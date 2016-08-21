@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel;
 using System.Threading;
@@ -15,8 +16,6 @@ namespace Replication
     public abstract class Service : MarshalByRefObject, IUSContract
     {
         #region Fields
-        protected bool loggingEnabled = true;
-
         protected ReaderWriterLockSlim locker = new ReaderWriterLockSlim();
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -34,6 +33,8 @@ namespace Replication
         #endregion
 
         #region Autoproperties
+        public static BooleanSwitch DataSwitch { get; protected set; }
+
         public Communicator Communicator { get; set; }
 
         public string Name { get; set; }
@@ -47,7 +48,7 @@ namespace Replication
             locker.EnterWriteLock();
             try
             {
-                if (loggingEnabled)
+                if (DataSwitch.Enabled)
                 {
                     Logger.Info("Invoke add event");
                 }
@@ -66,7 +67,7 @@ namespace Replication
             locker.EnterWriteLock();
             try
             {
-                if (loggingEnabled)
+                if (DataSwitch.Enabled)
                 {
                     Logger.Info("Invoke delete event");
                 }

@@ -62,7 +62,6 @@ namespace UserStorage
         }
         #endregion
 
-
         /// <summary>
         /// Generate id
         /// </summary>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -28,10 +29,13 @@ namespace UserStorage.NetworkCommunication
             listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             listener.Bind(IpEndPoint);
             listener.Listen(1);
+            DataSwitch = new BooleanSwitch("Data", "DataAccess module");
         }
         #endregion
 
         #region Autoproperties
+        public static BooleanSwitch DataSwitch { get; private set; }
+
         public IPEndPoint IpEndPoint { get; set; }
         #endregion
 
@@ -44,9 +48,17 @@ namespace UserStorage.NetworkCommunication
         {
             return Task.Run(() =>
             {
-                Logger.Info("Wait Connection");
+                if (DataSwitch.Enabled)
+                {
+                    Logger.Info("Wait Connection");
+                }
+
                 handler = listener.Accept();
-                Logger.Info("Connection accepted");
+
+                if (DataSwitch.Enabled)
+                {
+                    Logger.Info("Connection accepted");
+                }             
             });
         }
 
@@ -68,7 +80,11 @@ namespace UserStorage.NetworkCommunication
                 message = (Message)formatter.Deserialize(networkStream);
             }
 
-            Logger.Info("Message was received");
+            if (DataSwitch.Enabled)
+            {
+                Logger.Info("Message was received");
+            }
+
             return message;
         }
 

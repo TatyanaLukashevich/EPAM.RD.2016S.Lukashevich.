@@ -53,7 +53,6 @@ namespace UserStorage.NetworkCommunication
             sender.Connect(endPoints);
         }
 
-
         /// <summary>
         /// Start message receiving
         /// </summary>
@@ -153,7 +152,6 @@ namespace UserStorage.NetworkCommunication
                 }
             }
         }
-
 
         /// <summary>
         /// Send message

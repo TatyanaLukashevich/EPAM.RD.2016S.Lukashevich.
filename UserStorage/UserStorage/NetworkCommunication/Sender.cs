@@ -31,7 +31,6 @@ namespace UserStorage.NetworkCommunication
             }
         }
 
-
         /// <summary>
         /// Send message
         /// </summary>

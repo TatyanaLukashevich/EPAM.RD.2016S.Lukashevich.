@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Diagnostics;
 using NLog;
 using UserStorage;
 using UserStorage.Replication;
@@ -16,17 +16,13 @@ namespace Replication
         #region Constructors
         public MasterService(UserRepository repo) : base(repo)
         {
+            DataSwitch = new BooleanSwitch("Data", "DataAccess module");
         }
         #endregion
 
         public static MasterService GetInstance => instance ?? (instance = new MasterService(new UserRepository()));
 
         #region Public methods
-        public void RegisterRepository()
-        {
-            Logger.Info("Master Repository have been registered");
-        }
-
         /// <summary>
         /// Add user
         /// </summary>

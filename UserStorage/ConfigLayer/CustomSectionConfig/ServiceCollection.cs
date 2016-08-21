@@ -19,7 +19,6 @@ namespace ConfigLayer.CustomSectionConfig
             get { return (ServiceElement)BaseGet(idx); }
         }
 
-
         /// <summary>
         /// Create new element in Service section
         /// </summary>

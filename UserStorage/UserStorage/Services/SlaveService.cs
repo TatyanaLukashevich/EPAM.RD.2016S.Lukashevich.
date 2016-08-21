@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using NLog;
 using UserStorage;
 using UserStorage.NetworkCommunication;
@@ -16,6 +16,7 @@ namespace Replication
         #region Constructors
         public SlaveService(UserRepository repo) : base(repo)
         {
+            DataSwitch = new BooleanSwitch("Data", "DataAccess module");
         }
         #endregion
 
@@ -47,7 +48,6 @@ namespace Replication
             throw new InvalidOperationException();
         }
 
-
         /// <summary>
         ///  Slave can't read from xml
         /// </summary>
@@ -78,7 +78,7 @@ namespace Replication
         }
 
         /// <summary>
-        /// Notify user added
+        /// Add user if message received
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -88,7 +88,10 @@ namespace Replication
             try
             {
                 Repo.Add(args.ChangedUser);
-                Logger.Info("Collection of users for slave was updated. Added new user.");
+                if (DataSwitch.Enabled)
+                {
+                    Logger.Info("Collection of users for slave was updated. Added new user.");
+                }
             }
             finally
             {
@@ -97,7 +100,7 @@ namespace Replication
         }
 
         /// <summary>
-        /// Notify user deleted
+        /// Delete user if message received
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -107,7 +110,10 @@ namespace Replication
             try
             {
                 Repo.Delete(args.ChangedUser);
-                Logger.Info("Collection of users for slave was updated. User was deleted.");
+                if (DataSwitch.Enabled)
+                {
+                    Logger.Info("Collection of users for slave was updated. User was deleted.");
+                }                    
             }
             finally
             {     
